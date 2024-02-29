@@ -9,6 +9,7 @@ import Settings from "./pages/Settings.jsx";
 import Friends from "./pages/Friends.jsx";
 import Marketplace from "./pages/Marketplace.jsx";
 import Navbar from "./components/Navbar.jsx";
+import { useEffect } from "react";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -27,8 +28,27 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const googleTranslateElementInit = () => {
+    new window.google.translate.TranslateElement(
+      {
+        pageLanguage: "en",
+        autoDisplay: false,
+      },
+      "google_translate_element"
+    );
+  };
+  useEffect(() => {
+    var addScript = document.createElement("script");
+    addScript.setAttribute(
+      "src",
+      "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    );
+    document.body.appendChild(addScript);
+    window.googleTranslateElementInit = googleTranslateElementInit;
+  }, []);
+
   return (
-    <div className="App">
+    <div className="App" id="google_translate_element">
       <RouterProvider router={router} />
     </div>
   );
