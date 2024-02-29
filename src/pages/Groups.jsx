@@ -1,11 +1,12 @@
-import Navbar from "../components/Navbar.jsx";
 
+import {Box,Grid,Button,CardActions,Card,CardMedia,Typography,CardContent,Paper} from "@mui/material";
+import Cards from "../components/Cards.jsx"
 const Groups = () => {
+  
   return (
     <>
-
-      <h3>Groups</h3>
-
+    {/* <Cards image={} title={} description={}/> */}
+    hello
     </>
   )
 };
