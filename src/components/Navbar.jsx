@@ -108,7 +108,14 @@ export default function PersistentDrawerLeft() {
               component="div"
               sx={{ display: { xs: "none", sm: "block" } }}
             >
-              Navbar
+              Simple App
+            </Typography>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ display: { xs: "block", sm: "none" } }}
+            >
+              Simple App
             </Typography>
             <Button color="inherit" onClick={() => navigate("/logout")}>
               Logout
