@@ -21,7 +21,6 @@ const Cards = ({ image, title, description }) => {
         </CardContent>
         <CardActions>
           <Button size="small" variant="contained" startIcon={<ShareIcon />}>
-
             Share
           </Button>
           <Button size="small">JOIN GROUP</Button>
