@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Tooltip } from '@mui/material';
+import { Divider, Tooltip } from '@mui/material';
 
 function Copyright(props) {
   return (
@@ -51,16 +51,20 @@ export default function Profile() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            backgroundColor: "rgb(237, 239, 245)",
+            padding: "10px"
           }}
         >
+          <Typography variant='h4' sx={{ backgroundColor: "rgb(90, 123, 224)", color: "white", padding: "10px", margin: "10px", width: "100%" }} >Profile</Typography>
           <Avatar sx={{ bgcolor: "rgb(90, 123, 224)", width: 56, height: 56 }}>
             <Tooltip title="User">
               <Typography component="h1" variant="h5">
-                U
+                <Divider>
+                  U
+                </Divider>
               </Typography>
             </Tooltip>
           </Avatar>
-
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -105,13 +109,23 @@ export default function Profile() {
                   autoComplete="new-password"
                 />
               </Grid>
-              
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Confirm Password"
+                  type="password"
+                  id="confirm_password"
+                  autoComplete="new-password"
+                />
+              </Grid>
             </Grid>
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, borderRadius: "0px" }}
             >
               Update Info
             </Button>

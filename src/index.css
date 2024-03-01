@@ -1,13 +1,72 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+/* Reset default styles */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 16px;
+  width: 200px;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Style the container to position the custom select */
+.goog-te-combo {
+  position: fixed;
+  display: inline-block;
+  top: 65px;
+  right: 10px;
+  z-index: 100;
+}
+
+/* Style the arrow inside the select */
+.goog-te-combo::after {
+  content: "\25BC";
+  position: absolute;
+
+  pointer-events: none;
+}
+
+/* Style options */
+option {
+  background-color: #fff;
+  color: #000;
+  font-size: 16px;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Style the last option to remove the border-bottom */
+option:last-child {
+  border-bottom: none;
+}
+
+/* Style the hover effect */
+option:hover {
+  background-color: #f4f4f4;
+  cursor: pointer;
+}
+
+.goog-logo-link {
+  display: none !important;
+}
+.goog-te-gadget {
+  font-size: 0px !important;
+
 }

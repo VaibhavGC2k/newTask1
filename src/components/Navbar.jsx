@@ -16,9 +16,13 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Button } from "@mui/material";
+import { Avatar, Badge, Button, Menu, MenuItem, Tooltip } from "@mui/material";
+import MailIcon from '@mui/icons-material/Mail';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import LogoutIcon from '@mui/icons-material/Logout';
 import {
   AccountBox,
+  AccountCircle,
   Article,
   Group,
   Person,
@@ -26,7 +30,7 @@ import {
   Storefront,
 } from "@mui/icons-material";
 import { Link, Outlet, useNavigate } from "react-router-dom";
-
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -73,7 +77,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   ...theme.mixins.toolbar,
   justifyContent: "flex-end",
 }));
-
+const ITEM_HEIGHT = 48;
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
@@ -88,11 +92,20 @@ export default function PersistentDrawerLeft() {
 
   const navigate = useNavigate();
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const openMenu = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <Box sx={{ diplay: "flex" }}>
       <CssBaseline />
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <AppBar sx={{ position: "fixed", top: "0px", right: "0px" }}>
           <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
             <IconButton
               size="large"
@@ -100,26 +113,129 @@ export default function PersistentDrawerLeft() {
               color="inherit"
               aria-label="menu"
               sx={{ mr: 2 }}
+              onClick={handleDrawerOpen}
             >
-              <MenuIcon onClick={handleDrawerOpen} />
+              <MenuIcon />
             </IconButton>
-            <Typography
-              variant="h5"
-              component="div"
-              sx={{ display: { xs: "none", sm: "block" } }}
-            >
-              Simple App
+            <Typography variant="h6">
+              <span style={{
+                color: 'rgb(8, 32, 89)', fontFamily: "Rubik Bubbles",
+                fontWeight: "bold",
+                fontSize: "30px"
+              }}>Blue</span>
+              <span style={{ color: 'white', fontFamily: "Shadows Into Light", fontSize: "20px" }}>Horizon</span>
             </Typography>
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ display: { xs: "block", sm: "none" } }}
-            >
-              Simple App
-            </Typography>
-            <Button color="inherit" onClick={() => navigate("/logout")}>
-              Logout
-            </Button>
+            <MenuItem>
+              <IconButton size="large" aria-label="show 4 new mails" color="inherit"
+                sx={{
+                  display: {
+                    xs: "none",
+                    sm: "block",
+                    md: "block"
+                  }
+                }}
+              >
+                <Tooltip title="Messages">
+                  <Badge badgeContent={4} color="error">
+                    <MailIcon />
+                  </Badge>
+                </Tooltip>
+              </IconButton>
+              <IconButton
+                size="large"
+                aria-label="show 17 new notifications"
+                color="inherit"
+                sx={{
+                  display: {
+                    xs: "none",
+                    sm: "block",
+                    md: "block"
+                  }
+                }}
+              >
+                <Tooltip title="Notifications">
+                  <Badge badgeContent={17} color="error">
+                    <NotificationsIcon />
+                  </Badge>
+                </Tooltip>
+              </IconButton>
+
+
+              <IconButton
+                aria-label="more"
+                id="long-button"
+                aria-controls={openMenu ? 'long-menu' : undefined}
+                aria-expanded={openMenu ? 'true' : undefined}
+                aria-haspopup="true"
+                onClick={handleClick}
+                sx={{
+                  display: {
+                    xs: "block",
+                    sm: "none",
+                    md: "none"
+                  }
+                }}
+              >
+
+                <MoreVertIcon />
+              </IconButton>
+              <Menu
+                id="long-menu"
+                MenuListProps={{
+                  "aria-labelledby": "long-button",
+                }}
+                anchorEl={anchorEl}
+                open={openMenu}
+                onClose={handleClose}
+                sx={{
+                  display: {
+                    sm: "none"
+                  }
+                }}
+                PaperProps={{
+                  style: {
+                    maxHeight: ITEM_HEIGHT * 4.5,
+                    width: "20ch",
+                  },
+                }}
+              >
+                <MenuItem onClick={handleClose} sx={{ padding: "0px", margin: "0px" }}>
+                  <IconButton>
+                    <p style={{ fontSize: "20px" }}>Notifications</p>
+                    <Badge badgeContent={6} color="error" >
+                      <NotificationsIcon />
+                    </Badge>
+                  </IconButton>
+                </MenuItem>
+                <MenuItem onClick={handleClose} sx={{ padding: "0px", margin: "0px" }} >
+                  <IconButton>
+                    <p style={{ fontSize: "20px" }}>Messages</p>
+                    <Badge badgeContent={4} color="error" >
+                      <NotificationsIcon />
+                    </Badge>
+                  </IconButton>
+                </MenuItem>
+                <MenuItem onClick={handleClose} sx={{ padding: "0px", margin: "0px" }}>
+                  <Button sx={{ color: "red" }} endIcon={<LogoutIcon />} onClick={() => navigate("/logout")}
+                  >
+                    Logout
+                  </Button>
+                </MenuItem>
+              </Menu>
+
+              <Button color="inherit" onClick={() => navigate("/logout")}
+                sx={{
+                  display: {
+                    xs: "none",
+                    sm: "block",
+                    md: "block"
+                  },
+
+                }}
+              >
+                Logout
+              </Button>
+            </MenuItem>
           </Toolbar>
         </AppBar>
       </Box>
@@ -136,8 +252,33 @@ export default function PersistentDrawerLeft() {
         anchor="left"
         open={open}
       >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
+        <DrawerHeader sx={{ backgroundColor: "rgb(64, 114, 230)" }}>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              width: 'fit-content',
+              padding: '8px',
+              backgroundColor: "rgb(64, 114, 230)"
+            }}
+          >
+            <Avatar
+              alt="Remy Sharp"
+              src="https://images.unsplash.com/photo-1686593981963-c3e108260adb?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              sx={{ width: 56, height: 56, mr: 1 }}
+            />
+            <Typography variant="h6">
+              <span style={{
+                color: 'rgb(8, 32, 89)', fontFamily: "Rubik Bubbles",
+                fontWeight: "bold",
+                fontSize: "25px"
+              }}>Blue</span>
+              <span style={{ color: 'white', fontFamily: "Shadows Into Light", fontSize: "15px" }}>Horizon</span>
+            </Typography>
+          </Box>
+
+
+          <IconButton onClick={handleDrawerClose} >
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
             ) : (
@@ -153,10 +294,10 @@ export default function PersistentDrawerLeft() {
                 <Article />
               </ListItemIcon>
               <Link
-                to="pages"
+                to="homepage"
                 style={{ textDecoration: "none", color: "#000000DE" }}
               >
-                <ListItemText primary="Pages" />
+                <ListItemText primary="Homepage" />
               </Link>
             </ListItemButton>
           </ListItem>
@@ -232,6 +373,6 @@ export default function PersistentDrawerLeft() {
         <DrawerHeader />
         <Outlet />
       </Main>
-    </Box>
+    </Box >
   );
 }
