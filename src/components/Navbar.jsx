@@ -31,25 +31,29 @@ import {
 } from "@mui/icons-material";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import useMediaQuery from '@mui/material/useMediaQuery';
 const drawerWidth = 240;
-
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: open ? "240px" : "10px",
-    ...(open && {
+  ({ theme, open }) => {
+    const md = useMediaQuery(theme.breakpoints.up('md'));
+    const marginLeft = md && open ? "240px" : "10px";
+
+    return {
+      flexGrow: 1,
+      padding: theme.spacing(3),
       transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
       }),
-      // marginLeft: -1,
-    }),
-  })
+      marginLeft: marginLeft,
+      ...(open && {
+        transition: theme.transitions.create("margin", {
+          easing: theme.transitions.easing.easeOut,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+      }),
+    };
+  }
 );
 
 const AppBar = styled(MuiAppBar, {
@@ -117,14 +121,17 @@ export default function PersistentDrawerLeft() {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6">
-              <span style={{
-                color: 'rgb(8, 32, 89)', fontFamily: "Rubik Bubbles",
-                fontWeight: "bold",
-                fontSize: "30px"
-              }}>Blue</span>
-              <span style={{ color: 'white', fontFamily: "Shadows Into Light", fontSize: "20px" }}>Horizon</span>
-            </Typography>
+            <span class="notranslate">
+
+              <Typography variant="h6">
+                <span style={{
+                  color: 'rgb(8, 32, 89)', fontFamily: "Rubik Bubbles",
+                  fontWeight: "bold",
+                  fontSize: "30px"
+                }}>Blue</span>
+                <span style={{ color: 'white', fontFamily: "Shadows Into Light", fontSize: "20px" }}>Horizon</span>
+              </Typography>
+            </span>
             <MenuItem>
               <IconButton size="large" aria-label="show 4 new mails" color="inherit"
                 sx={{
@@ -202,9 +209,11 @@ export default function PersistentDrawerLeft() {
                 <MenuItem onClick={handleClose} sx={{ padding: "0px", margin: "0px" }}>
                   <IconButton>
                     <p style={{ fontSize: "20px" }}>Notifications</p>
-                    <Badge badgeContent={6} color="error" >
-                      <NotificationsIcon />
-                    </Badge>
+                    <span class="notranslate">
+                      <Badge badgeContent={6} color="error" >
+                        <MailIcon />
+                      </Badge>
+                    </span>
                   </IconButton>
                 </MenuItem>
                 <MenuItem onClick={handleClose} sx={{ padding: "0px", margin: "0px" }} >
@@ -216,7 +225,7 @@ export default function PersistentDrawerLeft() {
                   </IconButton>
                 </MenuItem>
                 <MenuItem onClick={handleClose} sx={{ padding: "0px", margin: "0px" }}>
-                  <Button sx={{ color: "red" }} endIcon={<LogoutIcon />} onClick={() => navigate("/logout")}
+                  <Button sx={{ color: "#00aeff" }} endIcon={<LogoutIcon />} onClick={() => navigate("/logout")}
                   >
                     Logout
                   </Button>
@@ -240,15 +249,7 @@ export default function PersistentDrawerLeft() {
         </AppBar>
       </Box>
       <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
-            width: drawerWidth,
-            boxSizing: "border-box",
-          },
-        }}
-        variant="persistent"
+        // variant="persistent"
         anchor="left"
         open={open}
       >
@@ -267,14 +268,16 @@ export default function PersistentDrawerLeft() {
               src="https://images.unsplash.com/photo-1686593981963-c3e108260adb?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               sx={{ width: 56, height: 56, mr: 1 }}
             />
-            <Typography variant="h6">
-              <span style={{
-                color: 'rgb(8, 32, 89)', fontFamily: "Rubik Bubbles",
-                fontWeight: "bold",
-                fontSize: "25px"
-              }}>Blue</span>
-              <span style={{ color: 'white', fontFamily: "Shadows Into Light", fontSize: "15px" }}>Horizon</span>
-            </Typography>
+            <span class="notranslate">
+              <Typography variant="h6">
+                <span style={{
+                  color: 'rgb(8, 32, 89)', fontFamily: "Rubik Bubbles",
+                  fontWeight: "bold",
+                  fontSize: "25px"
+                }}>Blue</span>
+                <span style={{ color: 'white', fontFamily: "Shadows Into Light", fontSize: "15px" }}>Horizon</span>
+              </Typography>
+            </span>
           </Box>
 
 
@@ -328,19 +331,6 @@ export default function PersistentDrawerLeft() {
             </ListItemButton>
           </ListItem>
           <Divider />
-          <ListItem disablePadding>
-            <ListItemButton component="a" href="#simple-list">
-              <ListItemIcon>
-                <Person />
-              </ListItemIcon>
-              <Link
-                to="friends"
-                style={{ textDecoration: "none", color: "#000000DE" }}
-              >
-                <ListItemText primary="Friends" />
-              </Link>
-            </ListItemButton>
-          </ListItem>
           <ListItem disablePadding>
             <ListItemButton component="a" href="#simple-list">
               <ListItemIcon>
