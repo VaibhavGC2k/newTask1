@@ -108,6 +108,12 @@ export default function PersistentDrawerLeft() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
+  };
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -298,7 +304,11 @@ export default function PersistentDrawerLeft() {
         <Divider />
         <List sx={{ backgroundColor: mode.mode ? null : "rgb(124, 124, 122)" }}>
           <ListItem disablePadding>
-            <ListItemButton >
+            <ListItemButton
+              selected={selectedIndex === 0}
+              sx={{ '&.Mui-selected': { backgroundColor: 'royalblue', color: "white" } }}
+              onClick={(event) => handleListItemClick(event, 0)}
+            >
               <ListItemIcon>
                 <Article />
               </ListItemIcon>
@@ -306,13 +316,16 @@ export default function PersistentDrawerLeft() {
                 to="homepage"
                 style={{ textDecoration: "none", color: mode.mode ? "#000000DE" : "white" }}
               >
-
                 <ListItemText primary="Homepage" />
               </NavLink>
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component="a">
+            <ListItemButton
+              selected={selectedIndex === 1}
+              sx={{ '&.Mui-selected': { backgroundColor: 'royalblue', color: "white" } }}
+              onClick={(event) => handleListItemClick(event, 1)}
+            >
               <ListItemIcon>
                 <Group />
               </ListItemIcon>
@@ -325,7 +338,11 @@ export default function PersistentDrawerLeft() {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton >
+            <ListItemButton
+              selected={selectedIndex === 2}
+              sx={{ '&.Mui-selected': { backgroundColor: 'royalblue', color: "white" } }}
+              onClick={(event) => handleListItemClick(event, 2)}
+            >
               <ListItemIcon>
                 <Storefront />
               </ListItemIcon>
@@ -339,7 +356,11 @@ export default function PersistentDrawerLeft() {
           </ListItem>
           <Divider />
           <ListItem disablePadding>
-            <ListItemButton >
+            <ListItemButton
+              selected={selectedIndex === 3}
+              sx={{ '&.Mui-selected': { backgroundColor: 'royalblue', color: "white" } }}
+              onClick={(event) => handleListItemClick(event, 3)}
+            >
               <ListItemIcon>
                 <Settings />
               </ListItemIcon>
@@ -352,13 +373,20 @@ export default function PersistentDrawerLeft() {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton >
+            <ListItemButton
+              selected={selectedIndex === 4}
+              sx={{
+                '&.Mui-selected': { backgroundColor: 'royalblue', color: "white" },
+                '&:hover': { backgroundColor: 'inherit' },
+              }}
+              onClick={(event) => handleListItemClick(event, 4)}
+            >
               <ListItemIcon>
-                <AccountBox color="action"/>
+                <AccountBox />
               </ListItemIcon>
               <NavLink
                 to="profile"
-                style={{ textDecoration: "none", color: mode.mode ? "#000000DE" : "white" }}
+                style={{ textDecoration: "none", color: "#000000DE" }}
               >
                 <ListItemText primary="Profile" />
               </NavLink>
