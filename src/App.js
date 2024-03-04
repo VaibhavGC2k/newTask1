@@ -9,6 +9,7 @@ import Marketplace from "./pages/Marketplace.jsx";
 import Navbar from "./components/Navbar.jsx";
 import { useEffect } from "react";
 import SignIn from "./components/SignIn.jsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+
   const googleTranslateElementInit = () => {
     new window.google.translate.TranslateElement(
       {

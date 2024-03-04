@@ -43,7 +43,7 @@ export default function Profile() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs" >
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
@@ -52,7 +52,7 @@ export default function Profile() {
             flexDirection: 'column',
             alignItems: 'center',
             backgroundColor: "rgb(237, 239, 245)",
-            padding: "10px"
+            padding: "10px",
           }}
         >
           <Typography variant='h4' sx={{ backgroundColor: "rgb(90, 123, 224)", color: "white", padding: "10px", margin: "10px", width: "100%" }} >Profile</Typography>

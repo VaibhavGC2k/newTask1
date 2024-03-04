@@ -68,10 +68,13 @@ option:hover {
 }
 .goog-te-gadget {
   font-size: 0px !important;
-
 }
 
 body > .skiptranslate {
   display: none;
 }
 
+.active {
+  color: "white";
+  /* backgroundcolor: "blue"; */
+}

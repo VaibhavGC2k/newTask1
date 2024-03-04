@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -16,20 +16,22 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Avatar, Badge, Button, Menu, MenuItem, Tooltip } from "@mui/material";
+import { Avatar, Badge, Button, FormControlLabel, Menu, MenuItem, Switch, Tooltip } from "@mui/material";
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import LogoutIcon from '@mui/icons-material/Logout';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import { useSelector, useDispatch } from "react-redux";
+// import { toggleDarkMode } from "../features/dark-mode-slice";
 import {
   AccountBox,
-  AccountCircle,
   Article,
   Group,
-  Person,
   Settings,
   Storefront,
 } from "@mui/icons-material";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import useMediaQuery from '@mui/material/useMediaQuery';
 const drawerWidth = 240;
@@ -84,8 +86,10 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 const ITEM_HEIGHT = 48;
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
+  const mode = useSelector((state) => state.darkMode)
   const [open, setOpen] = React.useState(true);
 
+  const dispatch = useDispatch()
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -104,12 +108,14 @@ export default function PersistentDrawerLeft() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   return (
-    <Box sx={{ diplay: "flex" }}>
+    <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar sx={{ position: "fixed", top: "0px", right: "0px" }}>
+        <AppBar sx={{
+          position: "fixed", top: "0px", right: "0px",
+          backgroundColor: mode.mode ? null : "rgb(71, 71, 70)"
+        }}>
           <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
             <IconButton
               size="large"
@@ -253,14 +259,14 @@ export default function PersistentDrawerLeft() {
         anchor="left"
         open={open}
       >
-        <DrawerHeader sx={{ backgroundColor: "rgb(64, 114, 230)" }}>
+        <DrawerHeader sx={{ backgroundColor: mode.mode ? "rgb(64, 114, 230)" : "rgb(71, 71, 70)" }}>
           <Box
             sx={{
               display: 'flex',
               alignItems: 'center',
               width: 'fit-content',
               padding: '8px',
-              backgroundColor: "rgb(64, 114, 230)"
+              backgroundColor: mode.mode ? "rgb(64, 114, 230)" : "rgb(71, 71, 70)"
             }}
           >
             <Avatar
@@ -290,18 +296,19 @@ export default function PersistentDrawerLeft() {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+        <List sx={{ backgroundColor: mode.mode ? null : "rgb(124, 124, 122)" }}>
           <ListItem disablePadding>
-            <ListItemButton component="a">
+            <ListItemButton >
               <ListItemIcon>
                 <Article />
               </ListItemIcon>
-              <Link
+              <NavLink
                 to="homepage"
-                style={{ textDecoration: "none", color: "#000000DE" }}
+                style={{ textDecoration: "none", color: mode.mode ? "#000000DE" : "white" }}
               >
+
                 <ListItemText primary="Homepage" />
-              </Link>
+              </NavLink>
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -309,54 +316,73 @@ export default function PersistentDrawerLeft() {
               <ListItemIcon>
                 <Group />
               </ListItemIcon>
-              <Link
+              <NavLink
                 to="groups"
-                style={{ textDecoration: "none", color: "#000000DE" }}
+                style={{ textDecoration: "none", color: mode.mode ? "#000000DE" : "white" }}
               >
                 <ListItemText primary="Groups" />
-              </Link>
+              </NavLink>
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component="a" href="#simple-list">
+            <ListItemButton >
               <ListItemIcon>
                 <Storefront />
               </ListItemIcon>
-              <Link
+              <NavLink
                 to="marketplace"
-                style={{ textDecoration: "none", color: "#000000DE" }}
+                style={{ textDecoration: "none", color: mode.mode ? "#000000DE" : "white" }}
               >
                 <ListItemText primary="Marketplace" />
-              </Link>
+              </NavLink>
             </ListItemButton>
           </ListItem>
           <Divider />
           <ListItem disablePadding>
-            <ListItemButton component="a" href="#simple-list">
+            <ListItemButton >
               <ListItemIcon>
                 <Settings />
               </ListItemIcon>
-              <Link
+              <NavLink
                 to="settings"
-                style={{ textDecoration: "none", color: "#000000DE" }}
+                style={{ textDecoration: "none", color: mode.mode ? "#000000DE" : "white" }}
               >
                 <ListItemText primary="Settings" />
-              </Link>
+              </NavLink>
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component="a" href="#simple-list">
+            <ListItemButton >
               <ListItemIcon>
-                <AccountBox />
+                <AccountBox color="action"/>
               </ListItemIcon>
-              <Link
+              <NavLink
                 to="profile"
-                style={{ textDecoration: "none", color: "#000000DE" }}
+                style={{ textDecoration: "none", color: mode.mode ? "#000000DE" : "white" }}
               >
                 <ListItemText primary="Profile" />
-              </Link>
+              </NavLink>
             </ListItemButton>
           </ListItem>
+          {/* <ListItem disablePadding>
+            <ListItemButton >
+              <ListItemIcon>
+                {mode.mode ? <LightModeIcon/> : <DarkModeIcon />}
+              </ListItemIcon>
+              <ListItemText primary={mode.mode ? "Dark Mode" : "Light Mode"} />
+              <FormControlLabel
+                value="start"
+                control={<Switch color="primary" />}
+                labelPlacement="start"
+                onClick={() => {
+                  console.log(mode)
+                  // dispatch(toggleDarkMode())
+                }
+                }
+              />
+
+            </ListItemButton>
+          </ListItem> */}
         </List>
       </Drawer>
       <Main open={open}>

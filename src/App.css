@@ -36,5 +36,10 @@
     transform: rotate(360deg);
   }
 }
-@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Rubik+Bubbles&family=Shadows+Into+Light&display=swap')
+.active {
+  color: "red";
+  /* background-color: rgb(84, 148, 207); */
+  /* backgroundcolor: "blue"; */
+}
+@import url("https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Bubbles&family=Shadows+Into+Light&display=swap");
