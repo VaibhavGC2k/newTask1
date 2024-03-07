@@ -9,21 +9,49 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase-config"
+import { useState } from "react";
 const defaultTheme = createTheme();
 
 export default function SignIn() {
   const dummyEmail = "vaibhav@gmail.com";
   const dummyPass = "12345";
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
   const navigate = useNavigate();
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const email = data.get("email");
-    const password = data.get("password");
-    if (dummyEmail === email && dummyPass === password) {
-      navigate('/homepage')
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value)
+    let re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (re.test(e.target.value) || !e.target.value) {
+      setEmailError(false);
     } else {
-      console.log("wrong details");
+      setEmailError(true);
+    }
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value)
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setEmailError(emailError === true || !email);
+    if (
+      !emailError &&
+      email
+    ) {
+      try {
+        const user = await signInWithEmailAndPassword(auth, email, password)
+        localStorage.setItem("token",user.user.accessToken)
+        navigate('/homepage')
+      } catch (error) {
+        setPasswordError(true)
+        console.log(error.message)
+      }
     }
   };
 
@@ -57,11 +85,13 @@ export default function SignIn() {
 
               <TextField
                 margin="normal"
-                required
+                error={emailError}
+                helperText={emailError ? "Enter valid Email" : ""}
                 fullWidth
                 id="email"
                 label="Email Address"
                 name="email"
+                onChange={handleEmailChange}
                 autoComplete="email"
                 autoFocus
               />
@@ -70,12 +100,15 @@ export default function SignIn() {
             <span class="notranslate">
               <TextField
                 margin="normal"
+                error={passwordError}
+                helperText={passwordError ? "Wrong Password" : ""}
                 required
                 fullWidth
                 name="password"
                 label="Password"
                 type="password"
                 id="password"
+                onChange={handlePasswordChange}
                 autoComplete="current-password"
               />
             </span>

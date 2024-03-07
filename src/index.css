@@ -31,7 +31,7 @@ select {
 .goog-te-combo {
   position: fixed;
   display: inline-block;
-  top: 65px;
+  top: 70px;
   right: 10px;
   z-index: 100;
 }
@@ -69,7 +69,37 @@ option:hover {
 .goog-te-gadget {
   font-size: 0px !important;
 }
+.images {
+  display: none;
+}
 
+.homeText {
+  display: block;
+  margin-top: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+  select {
+    max-width: 130px;
+    right: 26px;
+  }
+
+  option {
+    font-size: smaller;
+  }
+  .images {
+    display: block;
+    margin-top: 40px;
+  }
+
+  .homeText {
+    display: none;
+  }
+}
+/* google translate text */
+.VIpgJd-ZVi9od-l4eHX-hSRGPd {
+  display: none;
+}
 body > .skiptranslate {
   display: none;
 }

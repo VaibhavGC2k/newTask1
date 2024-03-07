@@ -1,33 +1,46 @@
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home.jsx";
-import Pages from "./pages/Pages.jsx";
-import Groups from "./pages/Groups.jsx";
+
+// import Groups from "./pages/Groups.jsx";
 import Profile from "./pages/Profile.jsx";
 import Settings from "./pages/Settings.jsx";
 import Marketplace from "./pages/Marketplace.jsx";
 import Navbar from "./components/Navbar.jsx";
-import { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import SignIn from "./components/SignIn.jsx";
 
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+
+const LazyGroup = React.lazy(() => import("./pages/Groups.jsx"));
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Navbar />,
+    element: <ProtectedRoute component={<Navbar />} />,
     children: [
-      { index: true, path: "homepage", element: <Home /> },
-      { path: "pages", element: <Pages /> },
-      { path: "groups", element: <Groups /> },
+      {
+        index: true,
+        path: "homepage",
+        element: <Home />,
+      },
+
+      {
+        path: "groups",
+        element: (
+          <Suspense fallback="Loading...">
+            <LazyGroup />
+          </Suspense>
+        ),
+      },
       { path: "marketplace", element: <Marketplace /> },
       { path: "settings", element: <Settings /> },
       { path: "profile", element: <Profile /> },
     ],
   },
-  { path: "/logout", element: <SignIn /> },
+  { path: "/signin", element: <SignIn /> },
 ]);
 
 function App() {
-
   const googleTranslateElementInit = () => {
     new window.google.translate.TranslateElement(
       {
