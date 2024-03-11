@@ -57,15 +57,14 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
+      <Container >
+     
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 0,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            backgroundColor: "rgb(194, 217, 245)",
             padding: "30px",
           }}
         >
@@ -79,7 +78,7 @@ export default function SignIn() {
             component="form"
             onSubmit={handleSubmit}
             noValidate
-            sx={{ mt: 1 }}
+            // sx={{ mt: 1 }}
           >
             <span class="notranslate">
 

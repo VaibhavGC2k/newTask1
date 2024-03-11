@@ -8,7 +8,7 @@ const ProtectedRoute = (props) => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
-        navigate('/signin')
+        navigate('/welcome')
       }
     } catch (error) {
       console.log("error")

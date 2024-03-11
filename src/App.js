@@ -11,6 +11,8 @@ import React, { Suspense, useEffect } from "react";
 import SignIn from "./components/SignIn.jsx";
 
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import Welcome from "./components/Welcome.jsx";
+import SignUp from "./components/Signup.jsx";
 
 const LazyGroup = React.lazy(() => import("./pages/Groups.jsx"));
 const router = createBrowserRouter([
@@ -38,6 +40,8 @@ const router = createBrowserRouter([
     ],
   },
   { path: "/signin", element: <SignIn /> },
+  { path: "/welcome", element: <Welcome /> },
+  { path: "/signup", element: <SignUp /> },
 ]);
 
 function App() {
