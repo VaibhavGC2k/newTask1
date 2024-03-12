@@ -44,6 +44,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase-config";
+import { enqueueSnackbar } from "notistack";
 
 const drawerWidth = 240;
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -194,10 +195,17 @@ export default function Navbar() {
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
+
   const logout = async () => {
     localStorage.removeItem("token");
+    handleLogout("error")
     await signOut(auth);
-    navigate("/signin");
+    navigate("/welcome");
+  };
+
+  function handleLogout(variant) {
+    enqueueSnackbar('You have logged out successfully!!', { variant });
+    
   };
   return (
     <ThemeProvider theme={darkTheme}>

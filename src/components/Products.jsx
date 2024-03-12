@@ -21,7 +21,7 @@ const Products = ({ image, item, description, rating, amount }) => {
           </Tooltip>
         </CardContent>
         <CardActions>
-          <Rating name="half-rating" defaultValue={rating} readOnly />
+          <Rating name="half-rating" value={rating} readOnly />
         </CardActions>
         <CardActions>
           <Typography fontWeight="bold">{`₹` + amount}</Typography>

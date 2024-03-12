@@ -9,7 +9,6 @@ import SignUp from './Signup';
 
 export default function Welcome() {
     const [value, setValue] = React.useState('1');
-
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -17,12 +16,13 @@ export default function Welcome() {
     return (
         <>
             <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
-                <Box sx={{ width: {
-              
-                    md:"40%",
-                    sm:"80%",
-                    xs:"90%"
-                } }}>
+                <Box sx={{
+                    width: {
+                        md: "40%",
+                        sm: "80%",
+                        xs: "90%"
+                    }
+                }}>
                     <TabContext value={value}>
                         <Box sx={{ borderBottom: 1, borderColor: 'divider', display: "flex", justifyContent: "center", backgroundColor: "rgb(151, 206, 230)", }}>
                             <TabList onChange={handleChange} aria-label="lab API tabs example" >

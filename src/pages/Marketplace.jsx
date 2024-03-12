@@ -1,11 +1,47 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Container, FormControl, Grid, MenuItem, NativeSelect, Select, Typography } from "@mui/material";
 import Navbar from "../components/Navbar.jsx";
-import { Search } from "@mui/icons-material";
+import { Label, Search } from "@mui/icons-material";
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import Products from "../components/Products.jsx";
+import marketplace from "../data/marketplace.js";
+import InputLabel from '@mui/material/InputLabel';
+import { useState } from "react";
+
 const Marketplace = () => {
+
+  const [search, setSearch] = useState('')
+
+  const [filter, setFilter] = useState('');
+  const [open, setOpen] = useState(false);
+
+  const handleChange = (event) => {
+    setFilter(event.target.value);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  }
+
+  const handleSort = (value) => {
+    if (value === "lowToHigh") {
+      marketplace.sort((a, b) => a.amount - b.amount)
+    } else if (value === "highToLow") {
+      marketplace.sort((a, b) => b.amount - a.amount)
+    } else if (value === "lowRatings") {
+      marketplace.sort((a, b) => a.rating - b.rating)
+      console.log(marketplace)
+    } else if (value === "highRatings") {
+      marketplace.sort((a, b) => b.rating - a.rating)
+      console.log(marketplace)
+    }
+  }
+
   const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -65,87 +101,64 @@ const Marketplace = () => {
               </SearchIconWrapper>
               <StyledInputBase
                 placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
+                onChange={(e) => {
+                  console.log(e.target.value)
+                  setSearch(e.target.value)
+                }}
+                value={search}
               />
             </Search>
           </Box>
         </Box>
         <Box sx={{ marginTop: "10px" }}>
-          <Box sx={{ textAlign: 'left' }}>
-            <Typography variant="h6" fontWeight="bold">Latest Products</Typography>
-            <Typography fontSize="15px">Hand picked products from last 30days</Typography>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Box sx={{ textAlign: "left" }}>
+              <Typography variant="h6" fontWeight="bold">Latest Products</Typography>
+              <Typography fontSize="15px">Hand picked products from last 30days</Typography>
+            </Box>
+
+            <Box>
+              <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="demo-controlled-open-select-label">Filter</InputLabel>
+                <Select
+                  labelId="demo-controlled-open-select-label"
+                  id="demo-controlled-open-select"
+                  open={open}
+                  onClose={handleClose}
+                  onOpen={handleOpen}
+                  value={filter}
+                  label="Filter"
+                  onChange={handleChange}
+                >
+                  <MenuItem value="sort(low-high)" onClick={() => handleSort('lowToHigh')}>sort(low-high)</MenuItem>
+                  <MenuItem value="sort(high-low)" onClick={() => handleSort('highToLow')}>sort(high-low)</MenuItem>
+                  <MenuItem value="highest rated" onClick={() => handleSort('highRatings')}>highest rating</MenuItem>
+                  <MenuItem value="lowest rated" onClick={() => handleSort('lowRatings')}>lowest rating</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
           </Box>
 
           <Grid container sx={{ padding: "30px" }} spacing={{ xs: 2, md: 3 }} columns={{ xs: 2, sm: 6, md: 8 }} justifyContent="space-around">
-            <Grid item>
-              <Products
-                image="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZGVsbCUyMHhwc3xlbnwwfHwwfHx8MA%3D%3D"
-                item="Dell XPS 13"
-                description="13.3-inch FHD, Intel Core i5, 8GB RAM, 256GB SSD"
-                rating="3.5"
-                amount="1299"
-              />
-            </Grid>
-            <Grid item>
-              <Products
-                image="https://images.unsplash.com/photo-1593442607435-e4e34991b210?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8JTIyQXBwbGUlMjBBaXJQb2RzJTIwUHJvJTIyfGVufDB8fDB8fHww"
-                item="Apple AirPods Pro"
-                description="Active Noise Cancellation, Transparency Mode"
-                rating="2.8"
-                amount="249"
-              />
-            </Grid><Grid item>
-              <Products
-                image="https://images.unsplash.com/photo-1564135624576-c5c88640f235?w=500&auto=format&fit=crop&q=60&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fHxlbnwwfHx8fA%3D%3D"
-                item="Samsung Galaxy S21 Ultra"
-                description="6.8-inch Quad HD+ AMOLED, Snapdragon 888, 12GB RAM, 128GB Storage"
-                rating="1.7"
-                amount="1199"
-              />
-            </Grid><Grid item>
-              <Products
-                image="https://images.unsplash.com/photo-1628202926206-c63a34b1618f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8U29ueSUyMFdIJTIwMTAwMFhNNCUyMFdpcmVsZXNzJTIwSGVhZHBob25lc3xlbnwwfHwwfHx8MA%3D%3D"
-                item="Sony WH-1000XM4 Wireless Headphones"
-                description="Industry-Leading Noise Cancellation, Alexa Built-in"
-                rating="3.9"
-                amount="349"
-              />
-            </Grid><Grid item>
-              <Products
-                image="https://images.unsplash.com/photo-1585857188849-f44983e4a509?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fE5pbnRlbmRvJTIwU3dpdGNofGVufDB8fDB8fHww"
-                item="Nintendo Switch"
-                description="Handheld Gaming Console, Neon Blue/Neon Red"
-                rating="4.0"
-                amount="299"
-              />
-            </Grid><Grid item>
-              <Products
-                image="https://images.unsplash.com/photo-1514076529215-03662283365b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Q2Fub24lMjBFT1MlMjA5MER8ZW58MHx8MHx8fDA%3D"
-                item="Canon EOS 90D"
-                description="32.5MP APS-C CMOS Sensor, DIGIC 8, 4K Video"
-                rating="3.5"
-                amount="1199"
-              />
-            </Grid><Grid item>
-              <Products
-                image="https://images.unsplash.com/photo-1617043786394-f977fa12eddf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8QXBwbGUlMjBXYXRjaCUyMFNlcmllcyUyMDZ8ZW58MHx8MHx8fDA%3D"
-                item="Apple Watch Series 6"
-                description="GPS + Cellular, 44mm, Aluminum Case"
-                rating="5.0"
-                amount="499"
-              />
-            </Grid><Grid item>
-              <Products
-                image="https://images.unsplash.com/photo-1610196600828-517131fddddd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Ym9zZXxlbnwwfHwwfHx8MA%3D%3D"
-                item="Bose QuietComfort 35 II"
-                description="Wireless Bluetooth Headphones, Noise Cancelling"
-                rating="4.5"
-                amount="299"
-              />
-            </Grid>
+            {marketplace.filter((eachProd) => {
+              return search.toLowerCase() === "" ? eachProd : eachProd.item.toLowerCase().includes(search)
+            }).map((eachProd, index) => {
+              return (
+                <Grid item key={index}>
+                  <Products
+                    image={eachProd.image}
+                    item={eachProd.item}
+                    description={eachProd.description}
+                    rating={eachProd.rating}
+                    amount={eachProd.amount}
+                  />
+                </Grid>
+              )
+            }
+            )}
           </Grid>
         </Box>
-      </Container>
+      </Container >
     </>
   )
 };

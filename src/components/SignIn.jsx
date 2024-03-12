@@ -12,15 +12,16 @@ import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase-config"
 import { useState } from "react";
+import { SnackbarProvider, useSnackbar } from 'notistack';
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const dummyEmail = "vaibhav@gmail.com";
-  const dummyPass = "12345";
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
+
+  const [errorMessage, setErrorMessage] = useState(null)
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
@@ -46,19 +47,26 @@ export default function SignIn() {
     ) {
       try {
         const user = await signInWithEmailAndPassword(auth, email, password)
-        localStorage.setItem("token",user.user.accessToken)
+        localStorage.setItem("token", user.user.accessToken)
+        handleSuccessMessage('success')
         navigate('/homepage')
       } catch (error) {
-        setPasswordError(true)
-        console.log(error.message)
+
+        setErrorMessage(error.message)
+        console.log(error)
       }
     }
   };
 
+  function handleSuccessMessage(variant) {
+    enqueueSnackbar('You have logged in successfully!!', { variant });
+    console.log("success message worked")
+  };
   return (
     <ThemeProvider theme={defaultTheme}>
+       
       <Container >
-     
+
         <Box
           sx={{
             marginTop: 0,
@@ -71,14 +79,12 @@ export default function SignIn() {
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
+
           <Box
             component="form"
             onSubmit={handleSubmit}
             noValidate
-            // sx={{ mt: 1 }}
+          // sx={{ mt: 1 }}
           >
             <span class="notranslate">
 
@@ -99,8 +105,7 @@ export default function SignIn() {
             <span class="notranslate">
               <TextField
                 margin="normal"
-                error={passwordError}
-                helperText={passwordError ? "Wrong Password" : ""}
+
                 required
                 fullWidth
                 name="password"
@@ -111,6 +116,11 @@ export default function SignIn() {
                 autoComplete="current-password"
               />
             </span>
+
+            {errorMessage ? <Box component="section" sx={{ p: 2, border: '1px dashed red', color: 'red' }}>
+              {errorMessage}
+            </Box> : ""}
+
             <Button
               type="submit"
               fullWidth

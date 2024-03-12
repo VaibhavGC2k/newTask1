@@ -3,43 +3,56 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
+
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
-
-// TODO remove, this demo shouldn't need to reset the theme.
+import { database } from '../firebase-config';
+import { useState } from 'react';
+import { addDoc, collection } from "firebase/firestore"
+import { auth } from "../firebase-config"
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { Alert, Snackbar } from '@mui/material';
 
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-    const handleSubmit = (event) => {
+    const [user, setUser] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+    })
+    const value = collection(database, "userDb")
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        try {
+            const data = new FormData(event.currentTarget);
+            setUser({
+                ...user,
+                ...Object.fromEntries([...data.entries()])
+            });
+            await addDoc(value, { ...user, ...Object.fromEntries([...data.entries()]) })
+            const userDoc = await createUserWithEmailAndPassword(auth, data.get("email"), data.get("password"))
+            setOpenSnackbar(true);
+            event.target.reset()
+        } catch (error) {
+            console.log(error.message)
+        }
+
     };
 
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenSnackbar(false);
+    };
     return (
         <ThemeProvider theme={defaultTheme}>
             <Container component="main" maxWidth="xs">
@@ -50,8 +63,7 @@ export default function SignUp() {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-
-                        padding:"30px"
+                        padding: "30px"
                     }}
                 >
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -114,11 +126,29 @@ export default function SignUp() {
                         >
                             Sign Up
                         </Button>
-
+                        <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleClose}>
+                            <Alert
+                                onClose={handleClose}
+                                severity="success"
+                                variant="filled"
+                                sx={{
+                                    display: {
+                                        sx: {
+                                            width: "40%"
+                                        },
+                                        sm: {
+                                            width: "60%"
+                                        }
+                                    }
+                                }}
+                            >
+                                User Registered Successfully!!
+                            </Alert>
+                        </Snackbar>
                     </Box>
                 </Box>
 
             </Container>
-        </ThemeProvider>
+        </ThemeProvider >
     );
 }

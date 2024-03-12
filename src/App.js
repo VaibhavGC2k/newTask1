@@ -13,6 +13,7 @@ import SignIn from "./components/SignIn.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Welcome from "./components/Welcome.jsx";
 import SignUp from "./components/Signup.jsx";
+import { SnackbarProvider } from "notistack";
 
 const LazyGroup = React.lazy(() => import("./pages/Groups.jsx"));
 const router = createBrowserRouter([
@@ -39,9 +40,7 @@ const router = createBrowserRouter([
       { path: "profile", element: <Profile /> },
     ],
   },
-  { path: "/signin", element: <SignIn /> },
   { path: "/welcome", element: <Welcome /> },
-  { path: "/signup", element: <SignUp /> },
 ]);
 
 function App() {
@@ -65,9 +64,11 @@ function App() {
   }, []);
 
   return (
-    <div className="App" id="google_translate_element">
-      <RouterProvider router={router} />
-    </div>
+    <SnackbarProvider maxSnack={3}>
+      <div className="App" id="google_translate_element">
+        <RouterProvider router={router} />
+      </div>
+    </SnackbarProvider>
   );
 }
 
