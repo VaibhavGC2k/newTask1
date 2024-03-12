@@ -8,41 +8,42 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Divider, Tooltip } from '@mui/material';
-import { addDoc, collection } from "firebase/firestore"
-import { query, where, getDocs } from 'firebase/firestore';
+import { addDoc, collection, Firestore, setDoc } from "firebase/firestore"
+import { query, where, getDocs,doc } from 'firebase/firestore';
 import { auth, database } from '../firebase-config';
 import { useEffect } from 'react';
-
-
-const defaultTheme = createTheme();
-
-async function getData() {
-  const currentUserEmail = await auth.currentUser.email;
-  console.log(currentUserEmail)
-  const q = query(collection(database, 'userDb'), where('email', '==', currentUserEmail));
-  getDocs(q)
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const userId = doc.id;
-        console.log({
-          firstName: doc.get("firstName"),
-          lastName: doc.get("lastName"),
-          password: doc.get("password")
-        });
-
-      });
-    })
-    .catch((error) => {
-      console.log("Error getting documents: ", error);
-    })
-}
-
 
 export default function Profile() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const currentUserEmail = auth.currentUser.email;
+    console.log("this is current user emial", currentUserEmail)
+    const q = query(collection(database, 'userDb'), where('email', '==', currentUserEmail));
+    getDocs(q)
+      .then((querySnapshot) => {
+        querySnapshot.forEach(async(doc) => {
+          const userId = doc.id;
+          const userDocRef = collection( database,'userDb')
+          await setDoc(doc(userDocRef,userId));
+          userDocRef.update({
+            firstName: data.get("firstName"),
+            lastName: data.get("lastName"),
+            password: data.get("password")
+          })
+            .then(() => {
+              console.log('Document successfully updated!');
+            })
+            .catch((error) => {
+              console.error('Error updating document: ', error);
+            });
+
+        });
+      })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      })
     console.log({
       providedFirstName: data.get("firstName"),
       providedLastName: data.get("lastName"),
@@ -119,7 +120,6 @@ export default function Profile() {
           </Button>
         </Box>
       </Box>
-
     </Container>
 
   );
