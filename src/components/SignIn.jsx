@@ -13,6 +13,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase-config"
 import { useState } from "react";
 import { SnackbarProvider, useSnackbar } from 'notistack';
+import styled from "@emotion/styled";
 const defaultTheme = createTheme();
 
 export default function SignIn() {
@@ -20,6 +21,7 @@ export default function SignIn() {
   const [password, setPassword] = useState();
   const [emailError, setEmailError] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
+  const Search = styled('div')(({ theme }) => ({}))
 
   const [errorMessage, setErrorMessage] = useState(null)
   const navigate = useNavigate();
@@ -64,9 +66,7 @@ export default function SignIn() {
   };
   return (
     <ThemeProvider theme={defaultTheme}>
-       
       <Container >
-
         <Box
           sx={{
             marginTop: 0,
