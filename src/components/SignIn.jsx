@@ -1,18 +1,16 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/material";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase-config"
 import { useState } from "react";
-import { SnackbarProvider, useSnackbar } from 'notistack';
+import { useSnackbar } from 'notistack';
 import styled from "@emotion/styled";
 const defaultTheme = createTheme();
 
@@ -21,7 +19,7 @@ export default function SignIn() {
   const [password, setPassword] = useState();
   const [emailError, setEmailError] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
-  const Search = styled('div')(({ theme }) => ({}))
+  
 
   const [errorMessage, setErrorMessage] = useState(null)
   const navigate = useNavigate();

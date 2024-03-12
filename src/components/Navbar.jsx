@@ -175,6 +175,8 @@ export default function Navbar() {
     });
   }, []);
 
+  
+
   const handleDrawerClose = () => {
     setOpen(false);
   };
@@ -332,11 +334,7 @@ export default function Navbar() {
                   <MenuItem
                     onClick={handleClose}
                     sx={{
-                      padding: "0px", margin: "0px", display: {
-                        xs: {
-
-                        }
-                      }
+                      padding: "0px", margin: "0px", 
                     }}
                   >
                     <IconButton>
