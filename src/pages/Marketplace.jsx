@@ -14,7 +14,6 @@ const Marketplace = () => {
   const [filter, setFilter] = useState('');
   const [open, setOpen] = useState(false);
 
-  console.log(products)
   const handleChange = (event) => {
     setFilter(event.target.value);
   };
@@ -38,14 +37,12 @@ const Marketplace = () => {
       products.sort((a, b) => a.rating - b.rating)
     } else if (value === "highRatings") {
       products.sort((a, b) => b.rating - a.rating)
-
     }
   }
 
   const theme = createTheme({
     breakpoints: {
       values: {
-       
         xs: 300, // phone
         sm: 600, // tablets
         md: 900, // small laptop
@@ -57,7 +54,6 @@ const Marketplace = () => {
   return (
     <>
       <Container>
-
         <ThemeProvider theme={theme}>
           <Box className="infoDisplayBox" 
           sx={{ 
@@ -139,6 +135,7 @@ const Marketplace = () => {
               return (
                 <Grid item key={index}>
                   <Products
+                  index={index}
                     image={eachProd.image}
                     item={eachProd.item}
                     description={eachProd.description}

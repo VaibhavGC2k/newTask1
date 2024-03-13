@@ -84,7 +84,7 @@ export default function SignIn() {
             noValidate
           // sx={{ mt: 1 }}
           >
-            <span class="notranslate">
+            <span className="notranslate">
 
               <TextField
                 margin="normal"
@@ -100,7 +100,7 @@ export default function SignIn() {
               />
             </span>
 
-            <span class="notranslate">
+            <span className="notranslate">
               <TextField
                 margin="normal"
 

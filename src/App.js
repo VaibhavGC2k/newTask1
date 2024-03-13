@@ -7,19 +7,19 @@ import Profile from "./pages/Profile.jsx";
 import Settings from "./pages/Settings.jsx";
 import Marketplace from "./pages/Marketplace.jsx";
 import Navbar from "./components/Navbar.jsx";
-import React, { Suspense, useEffect } from "react";
-import SignIn from "./components/SignIn.jsx";
-
+import React, { Suspense, useEffect } from "react"
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Welcome from "./components/Welcome.jsx";
-import SignUp from "./components/Signup.jsx";
 import { SnackbarProvider } from "notistack";
+import DisplayProductInfo from "./components/DisplayProductInfo.jsx";
+import ErrorPage from "./components/ErrorPage.jsx";
 
 const LazyGroup = React.lazy(() => import("./pages/Groups.jsx"));
 const router = createBrowserRouter([
   {
     path: "/",
     element: <ProtectedRoute component={<Navbar />} />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -35,9 +35,15 @@ const router = createBrowserRouter([
           </Suspense>
         ),
       },
-      { path: "marketplace", element: <Marketplace /> },
+      {
+        path: "", children: [
+          { path: "marketplace", element: <Marketplace /> },
+          { path: "marketplace/:prodId", element: <DisplayProductInfo /> }
+        ]
+      },
       { path: "settings", element: <Settings /> },
       { path: "profile", element: <Profile /> },
+
     ],
   },
   { path: "/welcome", element: <Welcome /> },

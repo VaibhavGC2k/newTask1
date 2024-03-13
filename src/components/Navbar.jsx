@@ -39,7 +39,7 @@ import {
   Settings,
   Storefront,
 } from "@mui/icons-material";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { signOut, onAuthStateChanged } from "firebase/auth";
@@ -211,9 +211,9 @@ export default function Navbar() {
   };
   return (
     <ThemeProvider theme={darkTheme}>
-      <Box sx={{ display: "flex" }}>
+    
         <CssBaseline />
-        <Box sx={{ flexGrow: 1 }}>
+      
           <AppBar
             sx={{
               position: "fixed",
@@ -233,7 +233,7 @@ export default function Navbar() {
               >
                 <MenuIcon />
               </IconButton>
-              <span class="notranslate">
+              <span className="notranslate">
                 <Typography variant="h6">
                   <span
                     style={{
@@ -339,7 +339,7 @@ export default function Navbar() {
                   >
                     <IconButton>
                       <p style={{ fontSize: "20px" }}>Notifications</p>
-                      <span class="notranslate">
+                      <span className="notranslate">
                         <Badge badgeContent={6} color="error">
                           <MailIcon />
                         </Badge>
@@ -387,7 +387,7 @@ export default function Navbar() {
               </MenuItem>
             </Toolbar>
           </AppBar>
-        </Box>
+      
         <Drawer
           // variant="persistent"
           anchor="left"
@@ -408,7 +408,7 @@ export default function Navbar() {
                 src="https://images.unsplash.com/photo-1686593981963-c3e108260adb?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 sx={{ width: 56, height: 56, mr: 1 }}
               />
-              <span class="notranslate">
+              <span className="notranslate">
                 <Typography variant="h6">
                   <span
                     style={{
@@ -431,6 +431,11 @@ export default function Navbar() {
                   </span>
                 </Typography>
               </span>
+              <Link to='/marketplace/mangojiuce' >
+                <Button color="secondary" variant="contained">
+                Click
+                </Button>
+                </Link>
             </Box>
 
             <IconButton onClick={handleDrawerClose}>
@@ -597,7 +602,7 @@ export default function Navbar() {
           <DrawerHeader />
           <Outlet />
         </Main>
-      </Box>
+     
     </ThemeProvider >
   );
 }

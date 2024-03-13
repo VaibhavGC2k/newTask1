@@ -1,6 +1,7 @@
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Rating, Tooltip, Typography } from "@mui/material";
-
-const Products = ({ image, item, description, rating, amount }) => {
+import marketplace from "../data/marketplace";
+import {Link }from "react-router-dom";
+const Products = ({ index,image, item, description, rating, amount }) => {
   return (
     <>
       <Card sx={{ minWidth: 200, maxWidth: 250, maxHeight: "550px", minHeight: "550px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
@@ -21,7 +22,7 @@ const Products = ({ image, item, description, rating, amount }) => {
           </Tooltip>
         </CardContent>
         <CardActions>
-          <Rating name="half-rating" value={rating} readOnly />
+          <Rating name="half-rating" value={parseInt(rating)} readOnly />
         </CardActions>
         <CardActions>
           <Typography fontWeight="bold">{`₹` + amount}</Typography>
@@ -41,21 +42,25 @@ const Products = ({ image, item, description, rating, amount }) => {
             padding: "10px"
           }}
         >
+          <Link to={index.toString()}>
           <Button
             variant="outlined"
             color="primary"
+            onClick={() => console.log(marketplace[index])}
             sx={{
               "&:hover": {
                 backgroundColor: "blue", // Change background color on hover
                 color: "white"
               }
             }}
-          >
-            Buy
+            >
+            View
           </Button>
+            </Link>
           <Button
             variant="outlined"
             color="primary"
+            onClick={() => console.log(index)}
             sx={{
               "&:hover": {
                 backgroundColor: "blue", // Change background color on hover
