@@ -13,78 +13,71 @@ export default function DisplayProductInfo() {
     return (
         // data && <img src={data.image} />
         <>
-            <Box >
 
-                <Card sx={{ minWidth: 300, maxWidth: 350, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-                    <CardMedia
-                        component="img"
-                        alt="img"
-                        sx={{ maxHeight: "500px", maxWidth: "450px", minHeight: "350px", minWidth: "350px" }}
-                        image={data.image}
-                    />
+            <Card elevation={0} sx={{ 
+                minWidth: 300,
+                 maxWidth: 450, 
+                 display: "flex",
+                  flexDirection: "column", 
+                  justifyContent: "space-between",
+                   padding: "5px", 
+                   gap: 2 ,
+                   border:"1px solid white",
+                   position:"fixed"
+                   }}>
+                <CardMedia
+                    component="img"
+                    alt="img"
+                    sx={{ maxHeight: "500px", maxWidth: "450px", minHeight: "350px", minWidth: "350px" }}
+                    image={data.image}
+                />
 
-                    <Box
+                <Box sx={{
+                    display: "flex", flexDirection: {
+                        xs: "column",
+                        md: "row"
+                    },
+                    justifyContent: {
+                        md: "space-around"
+                    }
+                    , gap: 1,
+                }}>
+                    {/* <Link to={index.toString()}> */}
+                    <Button
+                        variant="outlined"
+                        color="primary"
+                        // onClick={() => console.log(marketplace[index])}
+                        startIcon={<FlashOnIcon />}
                         sx={{
-                            display: 'flex',
-                            minHeight: {
-                                xs: "100px",
-                                md: "50px"
+                            "&:hover": {
+                                backgroundColor: "blue", // Change background color on hover
+                                color: "white"
                             },
-                            flexDirection: {
-                                xs: 'column',
-                                md: "row"
-                            },
-                            justifyContent: "space-around",
-                            xs: {
-                                alignItems: "center",
 
-                            },
-                            md: {
-                                alignItems: "flex-start"
-                            },
-                            padding: "10px"
                         }}
                     >
-                        {/* <Link to={index.toString()}> */}
-                        <Button
-                            variant="outlined"
-                            color="primary"
-                            // onClick={() => console.log(marketplace[index])}
-                            startIcon={<FlashOnIcon />}
-                            sx={{
-                                "&:hover": {
-                                    backgroundColor: "blue", // Change background color on hover
-                                    color: "white"
-                                },
+                        Buy
+                    </Button>
+                    {/* <Link to={index.toString()}> */}
+                    <Button
+                        variant="outlined"
+                        color="primary"
+                        // onClick={() => console.log(marketplace[index])}
+                        startIcon={<AddShoppingCartIcon />}
+                        sx={{
+                            "&:hover": {
+                                backgroundColor: "blue", // Change background color on hover
+                                color: "white"
+                            },
 
-                            }}
-                        >
-                            Buy
-                        </Button>
-                        {/* </Link> */}
-                        <Button
-                            variant="outlined"
-                            color="primary"
-                            // onClick={() => console.log(index)}
-                            endIcon={<AddShoppingCartIcon sx={{}} />}
-                            sx={{
+                        }}
+                    >
+                        Add to Cart
+                    </Button>
+                </Box>
+            </Card>
 
-                                "&:hover": {
-                                    backgroundColor: "blue", // Change background color on hover
-                                    color: "white"
-                                },
-                                display: {
-                                    xs: "block" // Display as block only for extra small screens
-                                },
-                            minWidth:"200px"
-                            }}
-                        >
-                            Add to Cart
-                        </Button>
-                    </Box>
-                </Card>
 
-            </Box>
         </>
     )
 }

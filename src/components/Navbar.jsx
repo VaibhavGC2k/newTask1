@@ -16,6 +16,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+
 import {
   Avatar,
   Badge,
@@ -175,7 +177,7 @@ export default function Navbar() {
     });
   }, []);
 
-  
+
 
   const handleDrawerClose = () => {
     setOpen(false);
@@ -207,402 +209,414 @@ export default function Navbar() {
 
   function handleLogout(variant) {
     enqueueSnackbar('You have logged out successfully!!', { variant });
-    
+
   };
   return (
     <ThemeProvider theme={darkTheme}>
-    
-        <CssBaseline />
-      
-          <AppBar
-            sx={{
-              position: "fixed",
-              top: "0px",
-              right: "0px",
-              backgroundColor: "rgb(64, 114, 230)"
-            }}
+
+      <CssBaseline />
+
+      <AppBar
+        sx={{
+          position: "fixed",
+          top: "0px",
+          right: "0px",
+          backgroundColor: "rgb(64, 114, 230)"
+        }}
+      >
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+            onClick={handleDrawerOpen}
           >
-            <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                sx={{ mr: 2 }}
-                onClick={handleDrawerOpen}
+            <MenuIcon />
+          </IconButton>
+          <span className="notranslate">
+            <Typography variant="h6">
+              <span
+                style={{
+                  color: "rgb(8, 32, 89)",
+                  fontFamily: "Rubik Bubbles",
+                  fontWeight: "bold",
+                  fontSize: "30px",
+                }}
               >
-                <MenuIcon />
-              </IconButton>
-              <span className="notranslate">
-                <Typography variant="h6">
-                  <span
-                    style={{
-                      color: "rgb(8, 32, 89)",
-                      fontFamily: "Rubik Bubbles",
-                      fontWeight: "bold",
-                      fontSize: "30px",
-                    }}
-                  >
-                    Blue
-                  </span>
-                  <span
-                    style={{
-                      color: "white",
-                      fontFamily: "Shadows Into Light",
-                      fontSize: "20px",
-                    }}
-                  >
-                    Horizon
-                  </span>
-                </Typography>
+                Blue
               </span>
-              <MenuItem>
-                <IconButton
-                  size="large"
-                  aria-label="show 4 new mails"
-                  color="inherit"
-                  sx={{
-                    display: {
-                      xs: "none",
-                      sm: "block",
-                      md: "block",
-                    },
-                  }}
-                >
-                  <Tooltip title="Messages">
-                    <Badge badgeContent={4} color="error">
+              <span
+                style={{
+                  color: "white",
+                  fontFamily: "Shadows Into Light",
+                  fontSize: "20px",
+                }}
+              >
+                Horizon
+              </span>
+            </Typography>
+          </span>
+
+          <MenuItem>
+
+            <IconButton
+              size="large"
+              aria-label="show 4 new mails"
+              color="inherit"
+              sx={{
+                alignSelf: "right"
+              }}
+            >
+              <Tooltip title="Cart">
+                <Badge badgeContent={null} color="error">
+                  <ShoppingCartIcon />
+                </Badge>
+              </Tooltip>
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="show 4 new mails"
+              color="inherit"
+              sx={{
+                display: {
+                  xs: "none",
+                  sm: "block",
+                  md: "block",
+                },
+              }}
+            >
+              <Tooltip title="Messages">
+                <Badge badgeContent={4} color="error">
+                  <MailIcon />
+                </Badge>
+              </Tooltip>
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+              sx={{
+                display: {
+                  xs: "none",
+                  sm: "block",
+                  md: "block",
+                },
+              }}
+            >
+              <Tooltip title="Notifications">
+                <Badge badgeContent={17} color="error">
+                  <NotificationsIcon />
+                </Badge>
+              </Tooltip>
+            </IconButton>
+
+            <IconButton
+              aria-label="more"
+              id="long-button"
+              aria-controls={openMenu ? "long-menu" : undefined}
+              aria-expanded={openMenu ? "true" : undefined}
+              aria-haspopup="true"
+              onClick={handleClick}
+              sx={{
+                display: {
+                  xs: "block",
+                  sm: "none",
+                  md: "none",
+                },
+              }}
+            >
+              <MoreVertIcon />
+            </IconButton>
+            <Menu
+              id="long-menu"
+              MenuListProps={{
+                "aria-labelledby": "long-button",
+              }}
+              anchorEl={anchorEl}
+              open={openMenu}
+              onClose={handleClose}
+              sx={{
+                display: {
+                  sm: "none",
+                },
+              }}
+              PaperProps={{
+                style: {
+                  maxHeight: ITEM_HEIGHT * 4.5,
+                  width: "20ch",
+                },
+              }}
+            >
+              <MenuItem
+                onClick={handleClose}
+                sx={{
+                  padding: "0px", margin: "0px",
+                }}
+              >
+                <IconButton>
+                  <p style={{ fontSize: "20px" }}>Notifications</p>
+                  <span className="notranslate">
+                    <Badge badgeContent={6} color="error">
                       <MailIcon />
                     </Badge>
-                  </Tooltip>
+                  </span>
                 </IconButton>
-                <IconButton
-                  size="large"
-                  aria-label="show 17 new notifications"
-                  color="inherit"
-                  sx={{
-                    display: {
-                      xs: "none",
-                      sm: "block",
-                      md: "block",
-                    },
-                  }}
-                >
-                  <Tooltip title="Notifications">
-                    <Badge badgeContent={17} color="error">
-                      <NotificationsIcon />
-                    </Badge>
-                  </Tooltip>
+              </MenuItem>
+              <MenuItem
+                onClick={handleClose}
+                sx={{ padding: "0px", margin: "0px" }}
+              >
+                <IconButton>
+                  <p style={{ fontSize: "20px" }}>Messages</p>
+                  <Badge badgeContent={4} color="error">
+                    <NotificationsIcon />
+                  </Badge>
                 </IconButton>
-
-                <IconButton
-                  aria-label="more"
-                  id="long-button"
-                  aria-controls={openMenu ? "long-menu" : undefined}
-                  aria-expanded={openMenu ? "true" : undefined}
-                  aria-haspopup="true"
-                  onClick={handleClick}
-                  sx={{
-                    display: {
-                      xs: "block",
-                      sm: "none",
-                      md: "none",
-                    },
-                  }}
-                >
-                  <MoreVertIcon />
-                </IconButton>
-                <Menu
-                  id="long-menu"
-                  MenuListProps={{
-                    "aria-labelledby": "long-button",
-                  }}
-                  anchorEl={anchorEl}
-                  open={openMenu}
-                  onClose={handleClose}
-                  sx={{
-                    display: {
-                      sm: "none",
-                    },
-                  }}
-                  PaperProps={{
-                    style: {
-                      maxHeight: ITEM_HEIGHT * 4.5,
-                      width: "20ch",
-                    },
-                  }}
-                >
-                  <MenuItem
-                    onClick={handleClose}
-                    sx={{
-                      padding: "0px", margin: "0px", 
-                    }}
-                  >
-                    <IconButton>
-                      <p style={{ fontSize: "20px" }}>Notifications</p>
-                      <span className="notranslate">
-                        <Badge badgeContent={6} color="error">
-                          <MailIcon />
-                        </Badge>
-                      </span>
-                    </IconButton>
-                  </MenuItem>
-                  <MenuItem
-                    onClick={handleClose}
-                    sx={{ padding: "0px", margin: "0px" }}
-                  >
-                    <IconButton>
-                      <p style={{ fontSize: "20px" }}>Messages</p>
-                      <Badge badgeContent={4} color="error">
-                        <NotificationsIcon />
-                      </Badge>
-                    </IconButton>
-                  </MenuItem>
-                  <MenuItem
-                    onClick={handleClose}
-                    sx={{ padding: "0px", margin: "0px" }}
-                  >
-                    <Button
-                      sx={{ color: "#00aeff" }}
-                      endIcon={<LogoutIcon />}
-                      onClick={logout}
-                    >
-                      Logout
-                    </Button>
-                  </MenuItem>
-                </Menu>
-
+              </MenuItem>
+              <MenuItem
+                onClick={handleClose}
+                sx={{ padding: "0px", margin: "0px" }}
+              >
                 <Button
-                  color="inherit"
+                  sx={{ color: "#00aeff" }}
+                  endIcon={<LogoutIcon />}
                   onClick={logout}
-                  sx={{
-                    display: {
-                      xs: "none",
-                      sm: "block",
-                      md: "block",
-                    },
-                  }}
                 >
                   Logout
                 </Button>
               </MenuItem>
-            </Toolbar>
-          </AppBar>
-      
-        <Drawer
-          // variant="persistent"
-          anchor="left"
-          open={open}
-        >
-          <DrawerHeader sx={{ backgroundColor: "rgb(64, 114, 230)" }}>
-            <Box
+            </Menu>
+
+            <Button
+              color="inherit"
+              onClick={logout}
               sx={{
-                display: "flex",
-                alignItems: "center",
-                width: "fit-content",
-                padding: "8px",
-                backgroundColor: "rgb(64, 114, 230)",
+                display: {
+                  xs: "none",
+                  sm: "block",
+                  md: "block",
+                },
               }}
             >
-              <Avatar
-                alt="Remy Sharp"
-                src="https://images.unsplash.com/photo-1686593981963-c3e108260adb?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                sx={{ width: 56, height: 56, mr: 1 }}
-              />
-              <span className="notranslate">
-                <Typography variant="h6">
-                  <span
-                    style={{
-                      color: "rgb(8, 32, 89)",
-                      fontFamily: "Rubik Bubbles",
-                      fontWeight: "bold",
-                      fontSize: "25px",
-                    }}
-                  >
-                    Blue
-                  </span>
-                  <span
-                    style={{
-                      color: "white",
-                      fontFamily: "Shadows Into Light",
-                      fontSize: "15px",
-                    }}
-                  >
-                    Horizon
-                  </span>
-                </Typography>
-              </span>
-              <Link to='/marketplace/mangojiuce' >
-                <Button color="secondary" variant="contained">
-                Click
-                </Button>
-                </Link>
-            </Box>
+              Logout
+            </Button>
+          </MenuItem>
+        </Toolbar>
+      </AppBar>
 
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === "ltr" ? (
-                <ChevronLeftIcon />
-              ) : (
-                <ChevronRightIcon />
-              )}
-            </IconButton>
-          </DrawerHeader>
-          <Divider />
+      <Drawer
+        // variant="persistent"
+        anchor="left"
+        open={open}
+      >
+        <DrawerHeader sx={{ backgroundColor: "rgb(64, 114, 230)" }}>
           <Box
             sx={{
-              padding: "10px",
-              gap: "5px",
               display: "flex",
-              flexDirection: "row",
               alignItems: "center",
+              width: "fit-content",
+              padding: "8px",
+              backgroundColor: "rgb(64, 114, 230)",
             }}
           >
-            <Avatar sx={{ bgcolor: "rgb(31, 86, 204)" }} variant="square">
-              {user.email && user.email.charAt(0).toUpperCase()}
-            </Avatar>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                paddingLeft: "5px",
-              }}
-            >
-              <Typography variant="h6">{user.email}</Typography>
-              <Typography fontSize="15px" fontFamily="cursive">
-                user
-              </Typography>
-            </Box>
-          </Box>
-          <List>
-            <ListItem disablePadding>
-              <ListItemButton
-                selected={selectedIndex === 0}
-                sx={{
-                  "&.Mui-selected": {
-                    backgroundColor: "royalblue",
-                    color: "white",
-                  },
-                }}
-                onClick={(event) => handleListItemClick(event, 0)}
-              >
-                <ListItemIcon>
-                  <Article />
-                </ListItemIcon>
-                <NavLink
-                  to="homepage"
-                  style={{ textDecoration: "none", color: `${mode === "light" ? "black" : "white"}` }}
-                >
-                  <ListItemText primary="Homepage" />
-                </NavLink>
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton
-                selected={selectedIndex === 1}
-                sx={{
-                  "&.Mui-selected": {
-                    backgroundColor: "royalblue",
-                    color: "white",
-                  },
-                }}
-                onClick={(event) => handleListItemClick(event, 1)}
-              >
-                <ListItemIcon>
-                  <Group />
-                </ListItemIcon>
-                <NavLink
-                  to="groups"
-                  style={{ textDecoration: "none", color: `${mode === "dark" ? "white" : "black"}` }}
-                >
-                  <ListItemText primary="Groups" />
-                </NavLink>
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton
-                selected={selectedIndex === 2}
-                sx={{
-                  "&.Mui-selected": {
-                    backgroundColor: "royalblue",
-                    color: "white",
-                  },
-                }}
-                onClick={(event) => handleListItemClick(event, 2)}
-              >
-                <ListItemIcon>
-                  <Storefront />
-                </ListItemIcon>
-                <NavLink
-                  to="marketplace"
-                  style={{ textDecoration: "none", color: `${mode === "dark" ? "white" : "black"}` }}
-                >
-                  <ListItemText primary="Marketplace" />
-                </NavLink>
-              </ListItemButton>
-            </ListItem>
-            <Divider />
-            <ListItem disablePadding>
-              <ListItemButton
-                selected={selectedIndex === 3}
-                sx={{
-                  "&.Mui-selected": {
-                    backgroundColor: "royalblue",
-                    color: "white",
-                  },
-                }}
-                onClick={(event) => handleListItemClick(event, 3)}
-              >
-                <ListItemIcon>
-                  <Settings />
-                </ListItemIcon>
-                <NavLink
-                  to="settings"
-                  style={{ textDecoration: "none", color: `${mode === "dark" ? "white" : "black"}` }}
-                >
-                  <ListItemText primary="Settings" />
-                </NavLink>
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton
-                selected={selectedIndex === 4}
-                sx={{
-                  "&.Mui-selected": {
-                    backgroundColor: "royalblue",
-                    color: "primary",
-                  },
-                  "&:hover": { backgroundColor: "inherit" },
-                }}
-                onClick={(event) => handleListItemClick(event, 4)}
-              >
-                <ListItemIcon>
-                  <AccountBox />
-                </ListItemIcon>
-                <NavLink
-                  to="profile"
+            <Avatar
+              alt="Remy Sharp"
+              src="https://images.unsplash.com/photo-1686593981963-c3e108260adb?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              sx={{ width: 56, height: 56, mr: 1 }}
+            />
+            <span className="notranslate">
+              <Typography variant="h6">
+                <span
                   style={{
-                    textDecoration: "none", color: `${mode === "dark" ? "white" : "black"}`
+                    color: "rgb(8, 32, 89)",
+                    fontFamily: "Rubik Bubbles",
+                    fontWeight: "bold",
+                    fontSize: "25px",
                   }}
                 >
-                  <ListItemText primary="Profile" />
-                </NavLink>
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <FormControlLabel
-                  control={<MaterialUISwitch sx={{ m: 1 }} />}
-                  label={mode === "light" ? "Dark Theme" : "Light Theme"}
-                  onClick={handleDarkToggle}
-                />
-              </ListItemButton>
-            </ListItem>
-          </List>
-        </Drawer>
-        <Main open={open}>
-          <DrawerHeader />
-          <Outlet />
-        </Main>
-     
+                  Blue
+                </span>
+                <span
+                  style={{
+                    color: "white",
+                    fontFamily: "Shadows Into Light",
+                    fontSize: "15px",
+                  }}
+                >
+                  Horizon
+                </span>
+              </Typography>
+            </span>
+
+          </Box>
+
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === "ltr" ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
+          </IconButton>
+        </DrawerHeader>
+        <Divider />
+        <Box
+          sx={{
+            padding: "10px",
+            gap: "5px",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ bgcolor: "rgb(31, 86, 204)" }} variant="square">
+            {user.email && user.email.charAt(0).toUpperCase()}
+          </Avatar>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              paddingLeft: "5px",
+            }}
+          >
+            <Typography variant="h6">{user.email}</Typography>
+            <Typography fontSize="15px" fontFamily="cursive">
+              user
+            </Typography>
+          </Box>
+        </Box>
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton
+              selected={selectedIndex === 0}
+              sx={{
+                "&.Mui-selected": {
+                  backgroundColor: "royalblue",
+                  color: "white",
+                },
+              }}
+              onClick={(event) => handleListItemClick(event, 0)}
+            >
+              <ListItemIcon>
+                <Article />
+              </ListItemIcon>
+              <NavLink
+                to="homepage"
+                style={{ textDecoration: "none", color: `${mode === "light" ? "black" : "white"}` }}
+              >
+                <ListItemText primary="Homepage" />
+              </NavLink>
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton
+              selected={selectedIndex === 1}
+              sx={{
+                "&.Mui-selected": {
+                  backgroundColor: "royalblue",
+                  color: "white",
+                },
+              }}
+              onClick={(event) => handleListItemClick(event, 1)}
+            >
+              <ListItemIcon>
+                <Group />
+              </ListItemIcon>
+              <NavLink
+                to="groups"
+                style={{ textDecoration: "none", color: `${mode === "dark" ? "white" : "black"}` }}
+              >
+                <ListItemText primary="Groups" />
+              </NavLink>
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton
+              selected={selectedIndex === 2}
+              sx={{
+                "&.Mui-selected": {
+                  backgroundColor: "royalblue",
+                  color: "white",
+                },
+              }}
+              onClick={(event) => handleListItemClick(event, 2)}
+            >
+              <ListItemIcon>
+                <Storefront />
+              </ListItemIcon>
+              <NavLink
+                to="marketplace"
+                style={{ textDecoration: "none", color: `${mode === "dark" ? "white" : "black"}` }}
+              >
+                <ListItemText primary="Marketplace" />
+              </NavLink>
+            </ListItemButton>
+          </ListItem>
+          <Divider />
+          <ListItem disablePadding>
+            <ListItemButton
+              selected={selectedIndex === 3}
+              sx={{
+                "&.Mui-selected": {
+                  backgroundColor: "royalblue",
+                  color: "white",
+                },
+              }}
+              onClick={(event) => handleListItemClick(event, 3)}
+            >
+              <ListItemIcon>
+                <Settings />
+              </ListItemIcon>
+              <NavLink
+                to="settings"
+                style={{ textDecoration: "none", color: `${mode === "dark" ? "white" : "black"}` }}
+              >
+                <ListItemText primary="Settings" />
+              </NavLink>
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton
+              selected={selectedIndex === 4}
+              sx={{
+                "&.Mui-selected": {
+                  backgroundColor: "royalblue",
+                  color: "primary",
+                },
+                "&:hover": { backgroundColor: "inherit" },
+              }}
+              onClick={(event) => handleListItemClick(event, 4)}
+            >
+              <ListItemIcon>
+                <AccountBox />
+              </ListItemIcon>
+              <NavLink
+                to="profile"
+                style={{
+                  textDecoration: "none", color: `${mode === "dark" ? "white" : "black"}`
+                }}
+              >
+                <ListItemText primary="Profile" />
+              </NavLink>
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <FormControlLabel
+                control={<MaterialUISwitch sx={{ m: 1 }} />}
+                label={mode === "light" ? "Dark Theme" : "Light Theme"}
+                onClick={handleDarkToggle}
+              />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Drawer>
+      <Main open={open}>
+        <DrawerHeader />
+        <Outlet />
+      </Main>
+
     </ThemeProvider >
   );
 }
