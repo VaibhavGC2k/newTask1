@@ -129,7 +129,7 @@ const Marketplace = () => {
                     inputProps={{ 'aria-label': 'search' }}
                     onChange={(e) => {setSearch(e.target.value);console.log(e.target.value)}}
                   />
-                </Search> */}
+                </Search>  */}
                 <TextField
                   sx={{
                     "& .MuiOutlinedInput-root": {

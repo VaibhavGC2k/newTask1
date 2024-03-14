@@ -33,7 +33,7 @@ import {
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   AccountBox,
   Article,
@@ -179,7 +179,7 @@ export default function Navbar() {
     });
   }, []);
 
-  const TotalCartQuantity = useSelector(state=>state.cart.cartTotalQuantity)
+  const TotalCartQuantity = useSelector(state => state.cart.cartTotalQuantity)
   const handleDrawerClose = () => {
     setOpen(false);
   };
@@ -271,7 +271,11 @@ export default function Navbar() {
               backgroundColor: "transparent"
             }
           }}>
-
+            <FormControlLabel
+              control={<MaterialUISwitch sx={{ m: 1 }} />}
+              label={mode === "light" ? "Dark Theme" : "Light Theme"}
+              onClick={handleDarkToggle}
+            />
             <IconButton
               size="large"
               aria-label="show 4 new mails"
@@ -279,7 +283,7 @@ export default function Navbar() {
               sx={{
                 alignSelf: "right"
               }}
-              onClick={()=>setOpenCart(true)}
+              onClick={() => setOpenCart(true)}
             >
               <Tooltip title="Cart">
                 <Badge badgeContent={TotalCartQuantity} color="error">
@@ -419,7 +423,7 @@ export default function Navbar() {
       </AppBar>
 
       <Drawer
-        // variant="persistent"
+        variant="persistent"
         anchor="left"
         open={open}
       >
@@ -615,11 +619,7 @@ export default function Navbar() {
           </ListItem>
           <ListItem disablePadding>
             <ListItemButton>
-              <FormControlLabel
-                control={<MaterialUISwitch sx={{ m: 1 }} />}
-                label={mode === "light" ? "Dark Theme" : "Light Theme"}
-                onClick={handleDarkToggle}
-              />
+
             </ListItemButton>
           </ListItem>
         </List>

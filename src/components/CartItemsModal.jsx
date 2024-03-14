@@ -49,7 +49,7 @@ export default function CartItemsModal({ openCart, setOpen }) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style} >
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                    <Typography  variant="h6" component="h2">
                         Your Items
                     </Typography>
                     {
@@ -57,9 +57,7 @@ export default function CartItemsModal({ openCart, setOpen }) {
                             <Typography variant='h6' color="error">
                                 Your cart is Empty..
                             </Typography>
-
                             :
-
                             <TableContainer >
                                 <Table sx={{ minWidth: 650, margin: "20px" }} aria-label="simple table">
                                     <TableHead>
@@ -120,10 +118,7 @@ export default function CartItemsModal({ openCart, setOpen }) {
                     </Box>
                 </Box>
             </Modal>
-
         )
     if (openCheckout)
-        return openCheckout && <Checkout setOpenCheckout={setOpenCheckout} openCheckout={openCheckout} />
-
-
+        return <Checkout setOpenCheckout={setOpenCheckout} openCheckout={openCheckout} />
 }
