@@ -1,25 +1,42 @@
 import React, { useEffect, useState } from 'react'
 import marketplace from '../data/marketplace'
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Box, Button, Card, CardMedia, Tooltip } from '@mui/material';
-import FlashOnIcon from '@mui/icons-material/FlashOn';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { addToCart, removeFromCart } from '../features/cartSlice';
-import { useDispatch } from 'react-redux';
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
+import { addToCart, deleteFromCart } from '../features/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { enqueueSnackbar } from 'notistack';
 export default function DisplayProductInfo() {
+
     const [data, setData] = useState({});
     const { prodId } = useParams();
     useEffect(() => {
         setData(marketplace[prodId]);
     }, [])
+
+    const itemsInCart = useSelector((state) => state.cart.cartItems.length)
+    console.log(console.log(itemsInCart))
     const dispatch = useDispatch()
     const handleAddToCart = () => {
-        
         dispatch(addToCart(data))
+
+
     }
-    const handleRemoveFromCart=()=>{
-        dispatch(removeFromCart(data))
+    const handleRemoveFromCart = () => {
+        if (itemsInCart !== 0) {
+            dispatch(deleteFromCart(data))
+        } else {
+            showEmptyCartAlert("success")
+            console.log("worked")
+        }
+
     }
+
+    const showEmptyCartAlert = (variant) => () => {
+        // variant could be success, error, warning, info, or default
+        enqueueSnackbar('No Items to Remove from Cart', { variant });
+    };
     return (
         <>
             <Card elevation={0} sx={{
@@ -50,22 +67,6 @@ export default function DisplayProductInfo() {
                     }
                     , gap: 1,
                 }}>
-
-                    <Button
-                        variant="outlined"
-                        color="primary"
-
-                        startIcon={<FlashOnIcon />}
-                        sx={{
-                            "&:hover": {
-                                backgroundColor: "blue",
-                                color: "white"
-                            },
-
-                        }}
-                    >
-                        Buy
-                    </Button>
                     <Button
                         variant="outlined"
                         color="primary"
@@ -78,6 +79,8 @@ export default function DisplayProductInfo() {
                             },
 
                         }}
+
+
                     >
                         Add to Cart
                     </Button>
@@ -85,7 +88,7 @@ export default function DisplayProductInfo() {
                         variant="outlined"
                         color="primary"
                         onClick={handleRemoveFromCart}
-                        startIcon={<AddShoppingCartIcon />}
+                        startIcon={<RemoveShoppingCartIcon />}
                         sx={{
                             "&:hover": {
                                 backgroundColor: "blue",
@@ -93,9 +96,13 @@ export default function DisplayProductInfo() {
                             },
 
                         }}
+
                     >
                         Remove from Cart
                     </Button>
+                </Box>
+                <Box>
+
                 </Box>
             </Card>
 

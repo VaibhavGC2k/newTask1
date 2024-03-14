@@ -179,7 +179,7 @@ const Marketplace = () => {
               return search.toLowerCase() === "" ? eachProd : eachProd.item.toLowerCase().includes(search)
             }).map((eachProd, index) => {
               return (
-                <Grid item key={index}>
+                <Grid item key={index} >
                   <Products
                     index={index}
                     image={eachProd.image}

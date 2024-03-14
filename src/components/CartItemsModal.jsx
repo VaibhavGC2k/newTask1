@@ -1,10 +1,14 @@
-import * as React from 'react';
+
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Divider, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
+import { addToCart, removeFromCart, deleteFromCart } from '../features/cartSlice';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const style = {
     position: 'absolute',
@@ -21,12 +25,13 @@ const style = {
 
 export default function CartItemsModal({ openCart, setOpen }) {
 
+
     const handleClose = () => {
-        console.log("modal", openCart)
         setOpen(() => false)
     }
     const cartItems = useSelector((state) => state.cart.cartItems)
     const cartTotalAmount = useSelector((state) => state.cart.cartTotalAmount)
+    const dispatch = useDispatch()
 
     return (
         <Modal
@@ -40,12 +45,12 @@ export default function CartItemsModal({ openCart, setOpen }) {
                     Your Items
                 </Typography>
                 {
-                    cartItems.length === 0 ? 
-                    <Typography variant='h6' color="error">
-                        Your cart is Empty..
-                    </Typography> 
-                    
-                    :
+                    cartItems.length === 0 ?
+                        <Typography variant='h6' color="error">
+                            Your cart is Empty..
+                        </Typography>
+
+                        :
 
                         <TableContainer >
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -54,8 +59,9 @@ export default function CartItemsModal({ openCart, setOpen }) {
                                         <TableCell>Sl NO.</TableCell>
                                         <TableCell>Item Name</TableCell>
                                         <TableCell align="left">Price</TableCell>
-                                        <TableCell align="left">Quantity</TableCell>
+                                        <TableCell align="center">Quantity</TableCell>
                                         <TableCell align="left">Amount</TableCell>
+                                        <TableCell align="left">Remove Item</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -67,8 +73,9 @@ export default function CartItemsModal({ openCart, setOpen }) {
                                             <TableCell component="th" scope="row">{index + 1}</TableCell>
                                             <TableCell align="left">{eachItem.item}</TableCell>
                                             <TableCell align="left">{eachItem.amount}</TableCell>
-                                            <TableCell align="left">{eachItem.cartQuantity}</TableCell>
+                                            <TableCell align="center" sx={{ display: "flex", justifyContent: "space-around" }}><IndeterminateCheckBoxIcon onClick={() => dispatch(removeFromCart(eachItem))} />{eachItem.cartQuantity}<AddBoxIcon onClick={() => dispatch(addToCart(eachItem))} /></TableCell>
                                             <TableCell align="left">{eachItem.cartQuantity * eachItem.amount}</TableCell>
+                                            <TableCell align="left">{<DeleteIcon onClick={() => dispatch(deleteFromCart(eachItem))} />}</TableCell>
                                         </TableRow>
                                     )}
                                 </TableBody>
@@ -83,7 +90,8 @@ export default function CartItemsModal({ openCart, setOpen }) {
                             </Table>
                         </TableContainer>
                 }
-                <hr />
+                <br />
+                <br />
                 <Button onClick={handleClose} variant='outlined' color="error" sx={{
                     '&:hover': {
                         color: "white",

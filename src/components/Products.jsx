@@ -1,10 +1,10 @@
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Rating, Tooltip, Typography } from "@mui/material";
 import marketplace from "../data/marketplace";
-import {Link }from "react-router-dom";
-const Products = ({ index,image, item, description, rating, amount }) => {
+import { Link } from "react-router-dom";
+const Products = ({ index, image, item, description, rating, amount }) => {
   return (
     <>
-      <Card sx={{ minWidth: 200, maxWidth: 250, maxHeight: "550px", minHeight: "550px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+      <Card sx={{ minWidth: 200, maxWidth: 250, maxHeight: "550px", minHeight: "550px", display: "flex", flexDirection: "column", justifyContent: "space-between",padding:"10px" }}>
         <CardMedia
           component="img"
           alt="img"
@@ -28,57 +28,27 @@ const Products = ({ index,image, item, description, rating, amount }) => {
           <Typography fontWeight="bold">{`₹` + amount}</Typography>
         </CardActions>
         <Box
-          sx={{
-            display: 'flex',
-            minHeight: {
-              xs: "100px",
-              md: "50px"
-            },
-            flexDirection: {
-              xs: 'column',
-              md: "row"
-            },
-            justifyContent: "space-around",
-            padding: "10px"
-          }}
+         
         >
           <Link to={index.toString()}>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={() => console.log(marketplace[index])}
-            sx={{
-              "&:hover": {
-                backgroundColor: "blue", // Change background color on hover
-                color: "white"
-              }
-            }}
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => console.log(marketplace[index])}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "blue", // Change background color on hover
+                  color: "white"
+                },
+                width:"100%"
+              }}
             >
-            View
-          </Button>
-            </Link>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={() => console.log(index)}
-            sx={{
-              "&:hover": {
-                backgroundColor: "blue", // Change background color on hover
-                color: "white"
-              },
-              display: {
-                xs: "block" // Display as block only for extra small screens
-              }
-            }}
-          >
-            Add to Cart
-          </Button>
+              View
+            </Button>
+          </Link>
         </Box>
-
-
       </Card>
     </>
   )
 };
-
 export default Products
