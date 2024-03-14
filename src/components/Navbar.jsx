@@ -48,6 +48,7 @@ import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase-config";
 import { enqueueSnackbar } from "notistack";
 import cartSlice from "../features/cartSlice";
+import CartItemsModal from "./CartItemsModal";
 
 const drawerWidth = 240;
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -148,6 +149,7 @@ const ITEM_HEIGHT = 48;
 
 export default function Navbar() {
   const [user, setUser] = useState({});
+  const [open, setOpen] = React.useState(true);
 
   const theme = useTheme();
   const [mode, setMode] = useState("light");
@@ -166,7 +168,6 @@ export default function Navbar() {
       color: "white",
     },
   });
-  const [open, setOpen] = React.useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -179,7 +180,6 @@ export default function Navbar() {
   }, []);
 
   const TotalCartQuantity = useSelector(state=>state.cart.cartTotalQuantity)
-  console.log("this is cart toal quantity"+TotalCartQuantity)
   const handleDrawerClose = () => {
     setOpen(false);
   };
@@ -212,6 +212,12 @@ export default function Navbar() {
     enqueueSnackbar('You have logged out successfully!!', { variant });
 
   };
+
+  //this is cart open close functionality
+  const [openCart, setOpenCart] = useState(false);
+  // const handleCartOpen = () => setOpenCart(true);
+
+
   return (
     <ThemeProvider theme={darkTheme}>
 
@@ -273,6 +279,7 @@ export default function Navbar() {
               sx={{
                 alignSelf: "right"
               }}
+              onClick={()=>setOpenCart(true)}
             >
               <Tooltip title="Cart">
                 <Badge badgeContent={TotalCartQuantity} color="error">
@@ -621,7 +628,7 @@ export default function Navbar() {
         <DrawerHeader />
         <Outlet />
       </Main>
-
+      <CartItemsModal openCart={openCart} setOpen={setOpenCart} />
     </ThemeProvider >
   );
 }

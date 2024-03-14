@@ -66,7 +66,6 @@ export default function DisplayProductInfo() {
                     >
                         Buy
                     </Button>
-
                     <Button
                         variant="outlined"
                         color="primary"
