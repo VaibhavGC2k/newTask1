@@ -13,6 +13,8 @@ import Welcome from "./components/Welcome.jsx";
 import { SnackbarProvider } from "notistack";
 import DisplayProductInfo from "./components/DisplayProductInfo.jsx";
 import ErrorPage from "./components/ErrorPage.jsx";
+import { Provider } from "react-redux";
+import { store } from "./store/store.js"
 
 const LazyGroup = React.lazy(() => import("./pages/Groups.jsx"));
 const router = createBrowserRouter([
@@ -71,9 +73,11 @@ function App() {
 
   return (
     <SnackbarProvider maxSnack={3}>
-      <div className="App" id="google_translate_element">
-        <RouterProvider router={router} />
-      </div>
+      <Provider store={store}>
+        <div className="App" id="google_translate_element">
+          <RouterProvider router={router} />
+        </div>
+      </Provider>
     </SnackbarProvider>
   );
 }

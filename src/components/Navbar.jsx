@@ -33,7 +33,7 @@ import {
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import {
   AccountBox,
   Article,
@@ -47,6 +47,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase-config";
 import { enqueueSnackbar } from "notistack";
+import cartSlice from "../features/cartSlice";
 
 const drawerWidth = 240;
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -177,8 +178,8 @@ export default function Navbar() {
     });
   }, []);
 
-
-
+  const TotalCartQuantity = useSelector(state=>state.cart.cartTotalQuantity)
+  console.log("this is cart toal quantity"+TotalCartQuantity)
   const handleDrawerClose = () => {
     setOpen(false);
   };
@@ -259,7 +260,11 @@ export default function Navbar() {
             </Typography>
           </span>
 
-          <MenuItem>
+          <MenuItem sx={{
+            '&:hover': {
+              backgroundColor: "transparent"
+            }
+          }}>
 
             <IconButton
               size="large"
@@ -270,7 +275,7 @@ export default function Navbar() {
               }}
             >
               <Tooltip title="Cart">
-                <Badge badgeContent={null} color="error">
+                <Badge badgeContent={TotalCartQuantity} color="error">
                   <ShoppingCartIcon />
                 </Badge>
               </Tooltip>

@@ -1,6 +1,7 @@
-import { Box, Container, FormControl, Grid, MenuItem, NativeSelect, Select, TextField, Typography, createTheme } from "@mui/material";
-import { styled } from '@mui/material/styles';
+import { Box, Container, FormControl, Grid, InputBase, MenuItem, NativeSelect, Select, TextField, Typography, createTheme } from "@mui/material";
+import { alpha, styled } from '@mui/material/styles';
 import Products from "../components/Products.jsx";
+import SearchIcon from '@mui/icons-material/Search';
 import marketplace from "../data/marketplace.js";
 import InputLabel from '@mui/material/InputLabel';
 import { useState } from "react";
@@ -51,35 +52,86 @@ const Marketplace = () => {
       }
     }
   });
+
+  const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(1),
+      width: 'auto',
+    },
+  }));
+
+  const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }));
+
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    width: '100%',
+    '& .MuiInputBase-input': {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create('width'),
+      [theme.breakpoints.up('sm')]: {
+        width: '12ch',
+        '&:focus': {
+          width: '20ch',
+        },
+      },
+    },
+  }));
   return (
     <>
       <Container>
         <ThemeProvider theme={theme}>
-          <Box className="infoDisplayBox" 
-          sx={{ 
-              minWidth: "100%", 
-              minHeight: "40%", 
-              padding: "10%", 
-              marginTop: "20px", 
+          <Box className="infoDisplayBox"
+            sx={{
+              minWidth: "100%",
+              minHeight: "40%",
+              padding: "10%",
+              marginTop: "20px",
               backgroundColor: "rgb(48, 92, 194)",
-            
-             }}>
+
+            }}>
             <Box sx={{ backgroundColor: "rgba(141, 169, 217,0.4)" }}>
               <Typography color="white" variant="h4">10,000+ Products and Designs starting from just 1$.. </Typography>
             </Box>
             <Box>
               <Typography fontSize="18px" color="rgb(192, 197, 209)">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, recusandae explicabo sed minus, odit fugiat maiores rem esse, sapiente dignissimos assumenda. Quo at atque assumenda tempore voluptatem sequi minus porro!</Typography>
             </Box>
-            <Box sx={{ padding: "10px", display: "flex", justifyContent: "center"  }}>
+            <Box sx={{ padding: "10px", display: "flex", justifyContent: "center" }}>
               <Box
                 sx={{
                   width: 500,
                   maxWidth: '100%',
                 }}
               >
+                {/* <Search>
+                  <SearchIconWrapper>
+                    <SearchIcon />
+                  </SearchIconWrapper>
+                  <StyledInputBase
+                    placeholder="Search…"
+                    inputProps={{ 'aria-label': 'search' }}
+                    onChange={(e) => {setSearch(e.target.value);console.log(e.target.value)}}
+                  />
+                </Search> */}
                 <TextField
                   sx={{
-
                     "& .MuiOutlinedInput-root": {
                       borderColor: "transparent",
                       "&.Mui-hover fieldset": {
@@ -87,15 +139,9 @@ const Marketplace = () => {
                       }, "&:hover fieldset": {
                         borderColor: "transparent"
                       }
-                    },
-                    backgroundColor: "rgba(93, 149, 245,0.5)", /* Set background color to white */
-                    color: "black"
+                    }, backgroundColor: "rgba(93, 149, 245,0.5)", color: "black"
+                  }} fullWidth placeholder="Search…" onChange={(e) => { setSearch(e.target.value);console.log(e.target.value) }} />
 
-                  }}
-                  fullWidth placeholder="Search…" onChange={(e) => {
-                    setSearch(e.target.value)
-                    console.log(e.target.value)
-                  }} />
               </Box>
             </Box>
           </Box>
@@ -135,7 +181,7 @@ const Marketplace = () => {
               return (
                 <Grid item key={index}>
                   <Products
-                  index={index}
+                    index={index}
                     image={eachProd.image}
                     item={eachProd.item}
                     description={eachProd.description}
