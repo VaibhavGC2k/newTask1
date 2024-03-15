@@ -32,14 +32,30 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
+
 .active {
   color: "red";
   /* background-color: rgb(84, 148, 207); */
   /* backgroundcolor: "blue"; */
 }
+
+.checkout-modal {
+
+  background: #afbed4;
+  background: linear-gradient(315deg, #2172cf, #71b5e2);
+  color: "white"
+}
+
+.icon-container {
+  margin-bottom: 20px;
+  padding: 7px 0;
+  font-size: 24px;
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Rubik+Bubbles&family=Shadows+Into+Light&display=swap");

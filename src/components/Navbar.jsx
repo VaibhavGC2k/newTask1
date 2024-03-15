@@ -273,7 +273,7 @@ export default function Navbar() {
           }}>
             <FormControlLabel
               control={<MaterialUISwitch sx={{ m: 1 }} />}
-              label={mode === "light" ? "Dark Theme" : "Light Theme"}
+         
               onClick={handleDarkToggle}
             />
             <IconButton

@@ -11,11 +11,14 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
-    minWidth:"700px",
-    border: '1px solid #000',
+    minWidth: {
+        xs: "300px",
+        sm: "700px"
+    },
+    borderTopRightRadius: '30px',
+    borderBottomLeftRadius: '30px',
     boxShadow: 24,
-    p: 4,
+    padding: "20px"
 };
 
 export default function Checkout({ openCheckout, setOpenCheckout }) {
@@ -29,8 +32,9 @@ export default function Checkout({ openCheckout, setOpenCheckout }) {
                 onClose={handleCheckoutClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
+
             >
-                <Box sx={style}>
+                <Box sx={style} className="checkout-modal">
                     <CheckoutStepper />
                 </Box>
             </Modal>

@@ -23,7 +23,10 @@ const style = {
     bgcolor: 'background.paper',
     border: '1px dotted blue',
     boxShadow: 24,
-    p: 4,
+    padding: "20px",
+    borderTopRightRadius: '30px',
+    borderBottomLeftRadius: '30px',
+
 };
 
 
@@ -49,7 +52,7 @@ export default function CartItemsModal({ openCart, setOpen }) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style} >
-                    <Typography  variant="h6" component="h2">
+                    <Typography variant="h6" component="h2">
                         Your Items
                     </Typography>
                     {
