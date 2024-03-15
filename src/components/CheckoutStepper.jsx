@@ -46,10 +46,8 @@ export default function CheckoutStepper({ handleCheckoutClose }) {
   const navigate = useNavigate()
   return (
     <>
-
       <Stepper activeStep={activeStep} orientation="vertical" sx={{
         padding: "10px",
-
       }} >
         {steps.map((step, index) => (
           <Step key={step.label} sx={{ maxHeight: "300px", overflow: "auto", }}>

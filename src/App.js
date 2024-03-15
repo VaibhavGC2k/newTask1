@@ -9,6 +9,7 @@ import Marketplace from "./pages/Marketplace.jsx";
 import Navbar from "./components/Navbar.jsx";
 import React, { Suspense, useEffect } from "react"
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import Groups from "./pages/Groups.jsx"
 import Welcome from "./components/Welcome.jsx";
 import { SnackbarProvider } from "notistack";
 import DisplayProductInfo from "./components/DisplayProductInfo.jsx";
@@ -16,7 +17,7 @@ import ErrorPage from "./components/ErrorPage.jsx";
 import { Provider } from "react-redux";
 import { store } from "./store/store.js"
 
-const LazyGroup = React.lazy(() => import("./pages/Groups.jsx"));
+// const LazyGroup = React.lazy(() => import("./pages/Groups.jsx"));
 const router = createBrowserRouter([
   {
     path: "/",
@@ -31,14 +32,16 @@ const router = createBrowserRouter([
 
       {
         path: "groups",
-        element: (
-          <Suspense fallback="Loading...">
-            <LazyGroup />
-          </Suspense>
-        ),
+        element: <Groups />
+        // (
+        // <Suspense fallback="Loading...">
+        // <LazyGroup />
+        // </Suspense>
+        // ),
       },
       {
-        path: "", children: [
+        path: "", 
+        children: [
           { path: "marketplace", element: <Marketplace /> },
           { path: "marketplace/:prodId", element: <DisplayProductInfo /> }
         ]
