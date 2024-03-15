@@ -35,7 +35,7 @@ export default function Checkout({ openCheckout, setOpenCheckout }) {
 
             >
                 <Box sx={style} className="checkout-modal">
-                    <CheckoutStepper />
+                    <CheckoutStepper handleCheckoutClose={handleCheckoutClose}/>
                 </Box>
             </Modal>
         </div>

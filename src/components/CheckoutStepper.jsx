@@ -9,6 +9,8 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import BillingAddress from '../pages/BillingAddress';
 import PaymentPage from '../pages/PaymentPage';
+import ConfirmationPage from '../pages/ConfirmationPage';
+import { redirect, useNavigate } from 'react-router-dom';
 
 const steps = [
   {
@@ -20,15 +22,12 @@ const steps = [
     description: <PaymentPage />
   },
   {
-    label: 'Create an ad',
-    description: `Try out different ad text to see what brings in the most customers,
-              and learn how to enhance your ads using features like ad extensions.
-              If you run into any problems with your ads, find out how to tell if
-              they're running and how to resolve approval issues.`,
+    label: 'Confirmation',
+    description: <ConfirmationPage />
   },
 ];
 
-export default function CheckoutStepper() {
+export default function CheckoutStepper({ handleCheckoutClose }) {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
@@ -39,10 +38,12 @@ export default function CheckoutStepper() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
+  const handleGoToMarketplace = () => {
+    handleCheckoutClose()
+    navigate('/marketplace')
   };
 
+  const navigate = useNavigate()
   return (
     <>
 
@@ -77,8 +78,8 @@ export default function CheckoutStepper() {
                   <Button
                     disabled={index === 0}
                     onClick={handleBack}
-                    sx={{ mt: 1, mr: 1,backgroundColor:"green",color:"white !important " }}
-                    
+                    sx={{ mt: 1, mr: 1, color: "white !important" }}
+
                   >
                     Back
                   </Button>
@@ -91,8 +92,8 @@ export default function CheckoutStepper() {
       {activeStep === steps.length && (
         <Paper square elevation={0} sx={{ p: 3 }}>
           <Typography>All steps completed - you&apos;re finished</Typography>
-          <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
-            Reset
+          <Button onClick={handleGoToMarketplace} sx={{ mt: 1, mr: 1 }}>
+            Go to Marketplace
           </Button>
         </Paper>
       )}
