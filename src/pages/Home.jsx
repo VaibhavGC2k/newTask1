@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 const Home = () => {
   const dispatch = useDispatch()
   const isLoading = useSelector((state)=>state.images.isLoading)
-  console.log(isLoading)
   return (
     <>
       <Images />

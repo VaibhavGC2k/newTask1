@@ -15,15 +15,16 @@ const imageSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchImages.pending, (state) => {
-    
+            console.log("pending")
             state.isLoading = true
         })
         builder.addCase(fetchImages.fulfilled, (state, action) => {
-        
+            console.log("fulfilled")
             state.isLoading = false;
             state.data = action.payload
         })
         builder.addCase(fetchImages.rejected, (state, action) => {
+            console.log("error")
             state.isError = true
         })
 

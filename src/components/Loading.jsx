@@ -9,11 +9,14 @@ const Loading = () => {
 
     const renderLoading = () => {
 
-        return <Card sx={{ maxWidth: 345 }}>
+        return <Card sx={{ minWidth: 345 }}>
             <CardHeader avatar={<Avatar><Skeleton variant='circular' width={40} height={40}></Skeleton></Avatar>}>
+                <Skeleton variant="rectangular" width={300} height={200} />
+                <Skeleton variant="text" />
+                <Skeleton variant="text" />
+                <Skeleton variant="text" />
             </CardHeader>
             <CardMedia height="194">
-                <Skeleton variant="rectangular" width={300} height={200} />
             </CardMedia>
             <CardContent>
                 <Skeleton variant="text" />

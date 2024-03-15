@@ -16,7 +16,7 @@ const Images = () => {
           imagesData.slice(0, 15).map((eachImage) => {
             return (
 
-              <Card sx={{ maxWidth: 345 }} className="images">
+              <Card sx={{ maxWidth: 345 }} >
                 <CardHeader
                   avatar={<Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
                     {eachImage.id}
@@ -53,7 +53,7 @@ const Images = () => {
   }
   return (
     <>
-      <Grid container  spacing={{ xs: 2, md: 3 }} columns={{ xs: 2, sm: 6, md: 8 }} justifyContent="space-around" >
+      <Grid container gap={2} spacing={{ xs: 2, md: 2 }} columns={{ xs: 2, sm: 3, md: 3 }} justifyContent="space-around" >
 
         {
           isLoading ? <Loading /> : renderImages()
