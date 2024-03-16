@@ -40,7 +40,7 @@ const router = createBrowserRouter([
         // ),
       },
       {
-        path: "", 
+        path: "",
         children: [
           { path: "marketplace", element: <Marketplace /> },
           { path: "marketplace/:prodId", element: <DisplayProductInfo /> }
@@ -73,6 +73,20 @@ function App() {
     document.body.appendChild(addScript);
     window.googleTranslateElementInit = googleTranslateElementInit;
   }, []);
+  
+  let n1 = 0
+  let n2 = 1
+  let n3;
+  let count = 10
+ 
+  for(let i = 0;i<count;i++){
+    n3 = n1+  n2
+    if(n3>5 && n3<=15){
+      console.log(n3)
+    }
+    n1 = n2
+    n2  =n3
+  }
 
   return (
     <SnackbarProvider maxSnack={3}>
