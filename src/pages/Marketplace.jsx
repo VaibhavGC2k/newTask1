@@ -1,17 +1,20 @@
 import { Box, Container, FormControl, Grid, InputBase, MenuItem, NativeSelect, Select, TextField, Typography, createTheme } from "@mui/material";
 import { alpha, styled } from '@mui/material/styles';
-import Products from "../components/Products.jsx";
+// import Products from "../components/Products.jsx";
 import SearchIcon from '@mui/icons-material/Search';
 import marketplace from "../data/marketplace.js";
 import InputLabel from '@mui/material/InputLabel';
 import { useState } from "react";
 import { ThemeProvider } from "@emotion/react";
+import { Suspense } from "react";
+import React from "react";
+import ProductsLoading from "../components/ProductsLoading.jsx";
 
 let products = marketplace.map((obj) => ({ ...obj }))
+const Products = React.lazy(() => import("../components/Products.jsx"))
 
 const Marketplace = () => {
   const [search, setSearch] = useState('')
-
   const [filter, setFilter] = useState('');
   const [open, setOpen] = useState(false);
 
@@ -140,7 +143,7 @@ const Marketplace = () => {
                         borderColor: "transparent"
                       }
                     }, backgroundColor: "rgba(93, 149, 245,0.5)", color: "black"
-                  }} fullWidth placeholder="Search…" onChange={(e) => { setSearch(e.target.value);console.log(e.target.value) }} />
+                  }} fullWidth placeholder="Search…" onChange={(e) => { setSearch(e.target.value); console.log(e.target.value) }} />
 
               </Box>
             </Box>
@@ -180,14 +183,16 @@ const Marketplace = () => {
             }).map((eachProd, index) => {
               return (
                 <Grid item key={index} >
-                  <Products
-                    index={index}
-                    image={eachProd.image}
-                    item={eachProd.item}
-                    description={eachProd.description}
-                    rating={eachProd.rating}
-                    amount={eachProd.amount}
-                  />
+                  <Suspense fallback={<ProductsLoading />}>
+                    <Products
+                      index={index}
+                      image={eachProd.image}
+                      item={eachProd.item}
+                      description={eachProd.description}
+                      rating={eachProd.rating}
+                      amount={eachProd.amount}
+                    />
+                  </Suspense>
                 </Grid>
               )
             }
