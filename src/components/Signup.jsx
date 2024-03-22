@@ -20,6 +20,7 @@ const defaultTheme = createTheme();
 
 export default function SignUp() {
     const [user, setUser] = useState({
+        
         firstName: "",
         lastName: "",
         email: "",
@@ -34,8 +35,8 @@ export default function SignUp() {
                 ...user,
                 ...Object.fromEntries([...data.entries()])
             });
-            await addDoc(value, { ...user, ...Object.fromEntries([...data.entries()]) })
             const userDoc = await createUserWithEmailAndPassword(auth, data.get("email"), data.get("password"))
+            await addDoc(value, { ...user, ...Object.fromEntries([...data.entries()]),uid:userDoc.user.uid })
             setOpenSnackbar(true);
             event.target.reset()
         } catch (error) {

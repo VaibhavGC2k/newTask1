@@ -6,49 +6,81 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Divider, Tooltip } from '@mui/material';
-import { addDoc, collection, Firestore, setDoc } from "firebase/firestore"
-import { query, where, getDocs,doc } from 'firebase/firestore';
+import { collection, doc, getDoc, updateDoc } from "firebase/firestore"
+import { getDocs } from 'firebase/firestore';
 import { auth, database } from '../firebase-config';
+import { useState } from 'react';
 import { useEffect } from 'react';
 
 export default function Profile() {
+  const [userId, setUserId] = useState(null)
+  const [user, setUser] = useState({
+    firstName: "",
+    lastName: "",
+  })
+
+  useEffect(() => {
+    getUserId()
+  }, [])
+
+  //get user id and info
+  async function getUserId() {
+    try {
+      const userCollection = collection(database, "userDb");
+      const data = await getDocs(userCollection);
+      data.docs.forEach(async (user) => {
+        const User = doc(userCollection, user.id);
+        const response = await getDoc(User);
+        const data = response.data();
+        if (auth.currentUser.email === data.email) {
+          setUserId(user.id)
+          console.log("ididdidiid", data)
+          setUser({
+            firstName: data.firstName,
+            lastName: data.lastName,
+          })
+        }
+      })
+    } catch (error) {
+      console.log(
+        `There was an error fetching the data in firestore: ${error}`
+      );
+    }
+  }
+
+
+  //update user info
+  const setDocument = async (id, firstName, lastName, password) => {
+    try {
+      const usersCollection = collection(database, 'userDb');
+      const userRef = doc(usersCollection, id);
+
+      const selectedUser = {
+        firstName,
+        lastName,
+        password
+      }
+      await updateDoc(userRef, selectedUser);
+      console.log("user updated successfully")
+    } catch (error) {
+      console.log(`Error in setDocument: ${error}`)
+    }
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const currentUserEmail = auth.currentUser.email;
-    console.log("this is current user emial", currentUserEmail)
-    const q = query(collection(database, 'userDb'), where('email', '==', currentUserEmail));
-    getDocs(q)
-      .then((querySnapshot) => {
-        querySnapshot.forEach(async(doc) => {
-          const userId = doc.id;
-          const userDocRef = collection( database,'userDb')
-          await setDoc(doc(userDocRef,userId));
-          userDocRef.update({
-            firstName: data.get("firstName"),
-            lastName: data.get("lastName"),
-            password: data.get("password")
-          })
-            .then(() => {
-              console.log('Document successfully updated!');
-            })
-            .catch((error) => {
-              console.error('Error updating document: ', error);
-            });
+    try {
 
-        });
-      })
-      .catch((error) => {
-        console.log("Error getting documents: ", error);
-      })
-    console.log({
-      providedFirstName: data.get("firstName"),
-      providedLastName: data.get("lastName"),
-      providedPassword: data.get("password")
-    })
+      const data = new FormData(event.currentTarget);
+      if (data.get("password") === data.get("confirmPassword")) {
+        setDocument(userId, data.get("firstName"), data.get("lastName"), data.get("password"),)
+      } else {
+        throw new Error("Password did not match")
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
   };
 
   return (
@@ -85,6 +117,10 @@ export default function Profile() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                value={user?.firstName}
+                onChange={(e) => setUser({
+                  firstName: e.target.value
+                })}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -95,10 +131,14 @@ export default function Profile() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="family-name"
+                value={user?.lastName}
+                onChange={(e) => setUser({
+                  lastName: e.target.value
+                })}
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 required
                 fullWidth
@@ -106,15 +146,38 @@ export default function Profile() {
                 label="Password"
                 type="password"
                 id="password"
+
                 autoComplete="new-password"
+                onChange={(e) => setUser({
+                  password: e.target.value
+                })}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                fullWidth
+                name="confirmPassword"
+                label="Confirm-Password"
+                type="password"
+                id="confirm-password"
+                autoComplete="new-password"
+                onChange={(e) => setUser({
+                  confirmPassword: e.target.value
+                })}
               />
             </Grid>
           </Grid>
           <Button
             type="submit"
-            fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2, borderRadius: "0px" }}
+            sx={{
+              mt: 3, mb: 2, borderRadius: "0px", width: {
+                xs: "100%",
+                sm: "70%",
+                md: "60%"
+              }
+            }}
           >
             Update Info
           </Button>
