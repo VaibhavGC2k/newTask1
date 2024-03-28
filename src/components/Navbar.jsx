@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -19,6 +20,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import {
+
   Avatar,
   Badge,
   Button,
@@ -32,30 +34,30 @@ import {
 } from "@mui/material";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import LogoutIcon from "@mui/icons-material/Logout";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   AccountBox,
   Article,
   Group,
-  Settings,
   Storefront,
 } from "@mui/icons-material";
-import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase-config";
 import { enqueueSnackbar } from "notistack";
-import cartSlice from "../features/cartSlice";
 import CartItemsModal from "./CartItemsModal";
 import Footer from "./Footer";
+import FindPeople from "../pages/FindPeople"
 
 const drawerWidth = 240;
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => {
     const md = useMediaQuery(theme.breakpoints.up("md"));
-    const marginLeft = md && open ? "240px" : "10px";
+    // const marginLeft = md && open ? "240px" : "10px";
 
     return {
       flexGrow: 1,
@@ -64,7 +66,7 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
-      marginLeft: marginLeft,
+      // marginLeft: marginLeft,
       ...(open && {
         transition: theme.transitions.create("margin", {
           easing: theme.transitions.easing.easeOut,
@@ -128,14 +130,14 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
+  // ...(open && {
+  // width: `calc(100% - ${drawerWidth}px)`,
+  // marginLeft: `${drawerWidth}px`,
+  //   transition: theme.transitions.create(["margin", "width"], {
+  //     easing: theme.transitions.easing.easeOut,
+  //     duration: theme.transitions.duration.enteringScreen,
+  //   }),
+  // }),
 }));
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -426,15 +428,25 @@ export default function Navbar() {
 
         <Drawer
           // variant="persistent"
-          anchor="left"
+          anchor="top"
           open={open}
+          onClose={handleDrawerClose}
         >
-          <DrawerHeader sx={{ backgroundColor: "rgb(64, 114, 230)" }}>
+          <DrawerHeader sx={{ backgroundColor: "rgb(64, 114, 230)", display: "flex", justifyContent: "space-between" }}>
+
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === "ltr" ? (
+                <KeyboardArrowUpIcon />
+              ) : (
+                <KeyboardArrowUpIcon />
+              )}
+            </IconButton>
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
                 width: "fit-content",
+                justifyContent: "flex-start",
                 padding: "8px",
                 backgroundColor: "rgb(64, 114, 230)",
               }}
@@ -470,13 +482,6 @@ export default function Navbar() {
 
             </Box>
 
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === "ltr" ? (
-                <ChevronLeftIcon />
-              ) : (
-                <ChevronRightIcon />
-              )}
-            </IconButton>
           </DrawerHeader>
           <Divider />
           <Box
@@ -584,13 +589,13 @@ export default function Navbar() {
                 onClick={(event) => handleListItemClick(event, 3)}
               >
                 <ListItemIcon>
-                  <Settings />
+                  <PersonSearchIcon />
                 </ListItemIcon>
                 <NavLink
-                  to="settings"
+                  to="findPeople"
                   style={{ textDecoration: "none", color: `${mode === "dark" ? "white" : "black"}` }}
                 >
-                  <ListItemText primary="Settings" />
+                  <ListItemText primary="Find People" />
                 </NavLink>
               </ListItemButton>
             </ListItem>
@@ -630,7 +635,7 @@ export default function Navbar() {
           <DrawerHeader />
           <Outlet />
           <div style={{ height: "100px", width: "100%" }}></div>
-          <Footer />
+          <Footer/>
         </Main>
         <CartItemsModal openCart={openCart} setOpen={setOpenCart} />
       </ThemeProvider >

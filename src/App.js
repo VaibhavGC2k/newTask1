@@ -4,10 +4,10 @@ import Home from "./pages/Home.jsx";
 
 // import Groups from "./pages/Groups.jsx";
 import Profile from "./pages/Profile.jsx";
-import Settings from "./pages/Settings.jsx";
+import FindPeople from "./pages/FindPeople.jsx";
 import Marketplace from "./pages/Marketplace.jsx";
 import Navbar from "./components/Navbar.jsx";
-import React, { Suspense, useEffect } from "react"
+import React, { useEffect } from "react"
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Groups from "./pages/Groups.jsx"
 import Welcome from "./components/Welcome.jsx";
@@ -17,7 +17,6 @@ import ErrorPage from "./components/ErrorPage.jsx";
 import { Provider } from "react-redux";
 import { store } from "./store/store.js"
 
-// const LazyGroup = React.lazy(() => import("./pages/Groups.jsx"));
 const router = createBrowserRouter([
   {
     path: "/",
@@ -41,7 +40,7 @@ const router = createBrowserRouter([
           { path: "marketplace/:prodId", element: <DisplayProductInfo /> }
         ]
       },
-      { path: "settings", element: <Settings /> },
+      { path: "findPeople", element: <FindPeople /> },
       { path: "profile", element: <Profile /> },
 
     ],
@@ -68,20 +67,6 @@ function App() {
     document.body.appendChild(addScript);
     window.googleTranslateElementInit = googleTranslateElementInit;
   }, []);
-
-  let n1 = 0
-  let n2 = 1
-  let n3;
-  let count = 10
-
-  for (let i = 0; i < count; i++) {
-    n3 = n1 + n2
-    if (n3 > 5 && n3 <= 15) {
-      console.log(n3)
-    }
-    n1 = n2
-    n2 = n3
-  }
 
   return (
     <SnackbarProvider maxSnack={3}>

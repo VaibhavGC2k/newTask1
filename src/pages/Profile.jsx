@@ -14,7 +14,8 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { Alert, Snackbar } from '@mui/material';
-
+import EditIcon from '@mui/icons-material/Edit';
+import editImage2 from "../images/edit2.jpg"
 const defaultTheme = createTheme();
 
 export default function Profile() {
@@ -40,7 +41,6 @@ export default function Profile() {
         const data = response.data();
         if (auth.currentUser.email === data.email) {
           setUserId(user.id)
-          console.log("ididdidiid", data)
           setUser({
             firstName: data.firstName,
             lastName: data.lastName,
@@ -100,7 +100,7 @@ export default function Profile() {
 
   return (
     <>
-      <ThemeProvider theme={defaultTheme}>
+    
         <Container sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
           <Box
             sx={{
@@ -109,19 +109,19 @@ export default function Profile() {
               flexDirection: 'column',
               justifyContent: "center",
               alignItems: 'center',
-              backgroundColor: "rgba(190, 207, 235,1)",
+              backgroundColor: "rgba(190, 207, 235,0.3)",
               padding: "10px",
             }}
           >
-            <Typography variant='h4' sx={{ backgroundColor: "rgb(90, 123, 224)", color: "#deedee", padding: "10px", margin: "10px", width: "100%" }} >Profile</Typography>
-            <Avatar sx={{ bgcolor: "rgb(90, 123, 224)", width: 56, height: 56 }}>
-              <Tooltip title="User">
-                <Typography component="h1" variant="h5">
-                  <Divider>
-                    U
-                  </Divider>
-                </Typography>
-              </Tooltip>
+            <Typography variant='h4' sx={{ padding: "10px", margin: "10px", width: "100%" }} >Profile</Typography>
+            <Avatar sx={{
+              bgcolor: "rgb(90, 123, 224)", width: 76, height: 76, "&:hover": {
+                cursor: "pointer", backgroundImage: `url(${editImage2})`,
+                backgroundSize: '60px 60px',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+              }
+            }}>
             </Avatar>
             <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
               <Grid container spacing={2}>
@@ -234,7 +234,7 @@ export default function Profile() {
             </Box>
           </Box>
         </Container>
-      </ThemeProvider>
+
     </>
   );
 }
